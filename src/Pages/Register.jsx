@@ -108,7 +108,7 @@ const Register = () => {
       </div>
 
       {/*  animation */}
-      <div className="hidden md:block p-12">
+      <div className="hidden xl:block p-12">
         <Lottie
           style={{ maxWidth: "400px" }}
           animationData={registerAnimation}
