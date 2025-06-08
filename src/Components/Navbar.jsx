@@ -63,10 +63,8 @@ const Navbar = () => {
     <>
       <NavLink
         className={({ isActive }) =>
-          `bg-blue-500 text-[18px]  py-3 px-6 font-semibold hover:bg-blue-500 hover:text-white rounded ${
-            isActive
-              ? "text-white"
-              : "border-2 border-blue-500 bg-white text-blue-500"
+          `bg-blue-500 text-[18px]  py-3 px-6 font-semibold hover:bg-blue-500 hover:text-white rounded border-2 border-blue-500 ${
+            isActive ? "text-white" : "bg-white text-blue-500"
           }`
         }
         to={"/login"}
@@ -75,10 +73,8 @@ const Navbar = () => {
       </NavLink>
       <NavLink
         className={({ isActive }) =>
-          `bg-blue-500 hidden xl:block text-[18px]  py-3 px-6 font-semibold hover:bg-blue-500 hover:text-white rounded ${
-            isActive
-              ? "text-white"
-              : "border-2 border-blue-500 bg-white text-blue-500"
+          `bg-blue-500 text-[18px]  py-3 px-6 font-semibold hover:bg-blue-500 hover:text-white rounded border-2 border-blue-500 ${
+            isActive ? "text-white" : " bg-white text-blue-500"
           }`
         }
         to={"/register"}
@@ -143,7 +139,9 @@ const Navbar = () => {
       <div className="navbar-center hidden lg:flex">
         <ul className="menu menu-horizontal px-1">{links}</ul>
       </div>
-      <div className="navbar-end hidden lg:flex space-x-6">{loginLinks}</div>
+      <div className="navbar-end hidden lg:flex lg:flex-col xl:flex-row gap-2">
+        {loginLinks}
+      </div>
     </nav>
   );
 };
