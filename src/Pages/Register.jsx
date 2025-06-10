@@ -100,7 +100,7 @@ const Register = () => {
         if (result.user.email) {
           navigate(`${location ? location : "/"}`);
 
-          toast.success("Account created successfully! Welcome aboard 🎉", {
+          toast.success("Sign in successfully with Google", {
             position: "top-right",
             autoClose: 5000,
             hideProgressBar: false,
@@ -114,16 +114,19 @@ const Register = () => {
       })
       .catch((error) => {
         if (error) {
-          toast.error("Registration failed. Please try again!", {
-            position: "top-right",
-            autoClose: 5000,
-            hideProgressBar: false,
-            closeOnClick: false,
-            pauseOnHover: true,
-            draggable: true,
-            progress: undefined,
-            theme: "colored",
-          });
+          toast.error(
+            "Oops! Something went wrong with Google sign-in. Please try again later.",
+            {
+              position: "top-right",
+              autoClose: 5000,
+              hideProgressBar: false,
+              closeOnClick: false,
+              pauseOnHover: true,
+              draggable: true,
+              progress: undefined,
+              theme: "colored",
+            }
+          );
         }
       });
   };

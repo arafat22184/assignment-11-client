@@ -1,10 +1,86 @@
 import Lottie from "lottie-react";
 import { FcGoogle } from "react-icons/fc";
 import { MdEmail, MdLock, MdLogin, MdPersonAdd } from "react-icons/md";
-import { Link } from "react-router";
+import { Link, useLocation, useNavigate } from "react-router";
 import loginAnimation from "../assets/Animations/loginAnimation.json";
+import { toast } from "react-toastify";
+import { useContext, useEffect } from "react";
+import { AuthContext } from "../Provider/AuthProvider";
 
 const Login = () => {
+  const { signInUser, setLocation, googleLogIn } = useContext(AuthContext);
+  const location = useLocation();
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    setLocation(location.state);
+  }, [location.state, setLocation]);
+
+  const handleLogin = (e) => {
+    e.preventDefault();
+
+    const email = e.target.email.value;
+    const password = e.target.password.value;
+    signInUser(email, password)
+      .then(() => {
+        navigate(location.state ? location.state : "/");
+        toast.success("Sign in successfully", {
+          position: "top-right",
+          autoClose: 5000,
+          hideProgressBar: false,
+          closeOnClick: false,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+          theme: "colored",
+        });
+      })
+      .catch(() => {
+        toast.error("Email or Password Invalid", {
+          position: "top-right",
+          autoClose: 5000,
+          hideProgressBar: false,
+          closeOnClick: false,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+          theme: "colored",
+        });
+      });
+  };
+
+  const handleGoogleLogin = () => {
+    googleLogIn()
+      .then(() => {
+        navigate(location.state ? location.state : "/");
+        toast.success("Sign in successfully with Google", {
+          position: "top-right",
+          autoClose: 5000,
+          hideProgressBar: false,
+          closeOnClick: false,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+          theme: "colored",
+        });
+      })
+      .catch(() => {
+        toast.error(
+          "Oops! Something went wrong with Google sign-in. Please try again later.",
+          {
+            position: "top-right",
+            autoClose: 5000,
+            hideProgressBar: false,
+            closeOnClick: false,
+            pauseOnHover: true,
+            draggable: true,
+            progress: undefined,
+            theme: "colored",
+          }
+        );
+      });
+  };
+
   return (
     <div
       className="md:flex md:justify-center md:items-center md:gap-28 px-4 py-24 bg-cover bg-no-repeat bg-center relative"
@@ -20,7 +96,7 @@ const Login = () => {
           Login to Blogify
         </h2>
 
-        <form className="space-y-4">
+        <form onSubmit={handleLogin} className="space-y-4">
           <div>
             <label className="mb-1 flex items-center gap-2 text-white">
               <MdEmail /> Email
@@ -59,7 +135,10 @@ const Login = () => {
         <div className="divider text-white font-bold">OR</div>
 
         <div className="mt-6">
-          <button className="w-full flex items-center justify-center gap-2 py-2 font-semibold rounded-md transition duration-300 text-white cursor-pointer bg-white/7 hover:bg-blue-500">
+          <button
+            onClick={handleGoogleLogin}
+            className="w-full flex items-center justify-center gap-2 py-2 font-semibold rounded-md transition duration-300 text-white cursor-pointer bg-white/7 hover:bg-blue-500"
+          >
             <div className="bg-white p-1 rounded-full">
               <FcGoogle />
             </div>{" "}
