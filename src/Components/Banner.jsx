@@ -81,9 +81,6 @@ const Banner = () => {
                 )}
               </AnimatePresence>
 
-              {/* Overlay */}
-              {/* <div className="absolute inset-0 bg-black/30 z-10"></div> */}
-
               {/* Content */}
               <div className="absolute inset-0 z-20 flex flex-col justify-center items-center text-center px-4 text-white ">
                 <AnimatePresence mode="wait">

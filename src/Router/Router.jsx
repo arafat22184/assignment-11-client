@@ -12,6 +12,12 @@ const router = createBrowserRouter([
       {
         index: true,
         Component: Home,
+        loader: async () => {
+          const res = await fetch(
+            `${import.meta.env.VITE_API_LINK}/recentBlogs`
+          );
+          return res.json();
+        },
       },
       {
         path: "/login",
