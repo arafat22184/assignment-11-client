@@ -1,12 +1,15 @@
 /* eslint-disable no-unused-vars */
 import { useEffect, useState } from "react";
-import { FaRocket } from "react-icons/fa";
+import { FaArrowUp } from "react-icons/fa";
 import { animateScroll as scroll } from "react-scroll";
-import { motion, AnimatePresence } from "framer-motion";
+import { motion, useAnimation } from "framer-motion";
+import { Tooltip } from "react-tooltip";
+import "react-tooltip/dist/react-tooltip.css";
 
-const RocketBackToTopButton = () => {
+const BackToTopButton = () => {
   const [visible, setVisible] = useState(false);
-  const [launching, setLaunching] = useState(false);
+  const [clicked, setClicked] = useState(false);
+  const controls = useAnimation();
 
   useEffect(() => {
     const toggleVisibility = () => {
@@ -16,45 +19,66 @@ const RocketBackToTopButton = () => {
     return () => window.removeEventListener("scroll", toggleVisibility);
   }, []);
 
-  const handleClick = () => {
-    setLaunching(true);
+  // Animate up/down bounce effect
+  useEffect(() => {
+    if (visible && !clicked) {
+      controls.start({
+        y: [0, -6, 0],
+        transition: {
+          duration: 1.5,
+          repeat: Infinity,
+          ease: "easeInOut",
+        },
+      });
+    } else {
+      controls.stop();
+    }
+  }, [visible, clicked, controls]);
+
+  const scrollToTop = () => {
+    setClicked(true);
     setTimeout(() => {
-      scroll.scrollToTop({ duration: 1000, smooth: "easeInOutQuart" });
-      setLaunching(false);
-    }, 800);
+      scroll.scrollToTop({ duration: 400, smooth: "easeInOutQuad" });
+      setClicked(false);
+    }, 600);
   };
 
   return (
-    <AnimatePresence>
-      {visible && !launching && (
-        <motion.button
-          onClick={handleClick}
-          initial={{ opacity: 0, y: 50 }}
-          animate={{ opacity: 1, y: 0, transition: { duration: 0.3 } }}
-          exit={{ opacity: 0, y: 50 }}
-          whileHover={{ scale: 1.2 }}
-          className="fixed bottom-6 right-6 z-50 p-4 rounded-full bg-gradient-to-r from-blue-500 to-indigo-600 text-white shadow-xl hover:from-indigo-600 hover:to-blue-500"
-        >
-          <FaRocket className="text-xl" />
-        </motion.button>
-      )}
-
-      {launching && (
+    <>
+      <motion.button
+        onClick={scrollToTop}
+        data-tooltip-id="backToTopTooltip"
+        aria-label="Back to top"
+        initial={{ opacity: 0, y: 50 }}
+        animate={{
+          opacity: visible ? 1 : 0,
+          y: visible ? 0 : 50,
+          transition: { duration: 0.4 },
+        }}
+        exit={{ opacity: 0, y: 50 }}
+        whileHover={{ scale: 1.1 }}
+        className={`fixed bottom-6 right-6 z-50 p-3 rounded-full shadow-lg bg-blue-600 text-white hover:bg-blue-700 cursor-pointer ${
+          !visible && "pointer-events-none"
+        }`}
+      >
         <motion.div
-          initial={{ y: 0, opacity: 1, scale: 1 }}
-          animate={{
-            y: -150,
-            opacity: 0,
-            scale: 1.2,
-            transition: { duration: 0.8, ease: "easeInOut" },
-          }}
-          className="fixed bottom-6 right-6 z-50 p-4 rounded-full bg-gradient-to-r from-blue-500 to-indigo-600 text-white shadow-xl"
+          animate={
+            clicked
+              ? {
+                  y: -80,
+                  opacity: 0,
+                  transition: { duration: 0.3, ease: "easeInOut" },
+                }
+              : controls
+          }
         >
-          <FaRocket className="text-xl animate-pulse" />
+          <FaArrowUp className="text-lg" />
         </motion.div>
-      )}
-    </AnimatePresence>
+      </motion.button>
+
+      <Tooltip id="backToTopTooltip" content="Back to Top" place="left" />
+    </>
   );
 };
 
-export default RocketBackToTopButton;
+export default BackToTopButton;
