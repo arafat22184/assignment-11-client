@@ -16,7 +16,7 @@ const Login = () => {
 
       {/* LOGIN Form */}
       <div className=" md:min-w-xl max-w-xl p-8 rounded-xl shadow-lg  bg-white/5 backdrop-blur-md border border-white/80">
-        <h2 className="text-3xl font-bold mb-6 text-center text-white">
+        <h2 className="text-3xl font-bold mb-6 text-center text-white dmSerif">
           Login to Blogify
         </h2>
 

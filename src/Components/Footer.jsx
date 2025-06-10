@@ -41,7 +41,7 @@ const Footer = () => {
         <div>
           <div className="flex w-12 items-center gap-3 mb-3">
             <img src="https://i.ibb.co/cSqJhKWm/logo-Light.png" alt="logo" />
-            <h3 className="text-2xl font-bold">Blogify</h3>
+            <h3 className="text-2xl font-bold dmSerif">Blogify</h3>
           </div>
           <p className="text-gray-400 text-sm">
             Blogify is your go-to platform for creative blogging, tech tips, and
@@ -51,7 +51,7 @@ const Footer = () => {
 
         {/* Quick Links */}
         <div>
-          <h3 className="text-xl font-bold mb-3 flex items-center gap-2">
+          <h3 className="text-xl font-bold mb-3 flex items-center gap-2 dmSerif">
             <FaLink />
             Quick Links
           </h3>
@@ -110,7 +110,7 @@ const Footer = () => {
 
         {/* Contact Info */}
         <div>
-          <h3 className="text-lg font-semibold mb-4 flex items-center gap-2">
+          <h3 className="text-lg font-semibold mb-4 flex items-center gap-2 dmSerif">
             <MdContacts />
             Contact
           </h3>
@@ -123,7 +123,7 @@ const Footer = () => {
 
         {/* Socials */}
         <div>
-          <h3 className="text-lg font-semibold mb-4 flex items-center gap-2">
+          <h3 className="text-lg font-semibold mb-4 flex items-center gap-2 dmSerif">
             <IoMdPersonAdd /> Follow Us
           </h3>
           <div className={`flex space-x-4 text-xl `}>

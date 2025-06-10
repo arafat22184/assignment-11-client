@@ -133,7 +133,9 @@ const Navbar = () => {
             className="max-w-12"
             alt="Logo"
           />
-          <h1 className="text-white font-extrabold text-3xl">Blogify</h1>
+          <h1 className="text-white font-extrabold text-3xl dmSerif">
+            Blogify
+          </h1>
         </Link>
       </div>
       <div className="navbar-center hidden lg:flex">

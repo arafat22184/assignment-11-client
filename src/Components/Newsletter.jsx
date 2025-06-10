@@ -28,7 +28,7 @@ const Newsletter = () => {
 
       <div className="relative z-10 max-w-4xl mx-auto text-center">
         <motion.h2
-          className="text-4xl md:text-5xl font-extrabold text-white mb-4 leading-tight"
+          className="text-4xl md:text-5xl font-extrabold text-white mb-4 leading-tight dmSerif"
           initial={{ opacity: 0, y: -40 }}
           whileInView={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6 }}
