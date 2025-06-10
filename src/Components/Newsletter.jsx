@@ -1,3 +1,4 @@
+/* eslint-disable no-unused-vars */
 import { toast } from "react-toastify";
 import { motion } from "framer-motion";
 import "react-toastify/dist/ReactToastify.css";
@@ -18,7 +19,7 @@ const Newsletter = () => {
 
   return (
     <section
-      className="relative z-10 mt-24 px-6 py-20 bg-slate-900 bg-gradient-to-br from-slate-900 via-slate-950 to-black rounded-lg overflow-hidden shadow-2xl"
+      className="max-w-11/12 mx-auto relative z-10 mt-24 px-6 py-20 bg-slate-900 bg-gradient-to-br from-slate-900 via-slate-950 to-black rounded-lg overflow-hidden shadow-2xl"
       id="newsletter"
     >
       {/* background glow */}

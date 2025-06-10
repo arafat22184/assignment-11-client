@@ -5,7 +5,7 @@ const Navbar = () => {
     <>
       <NavLink
         className={({ isActive }) =>
-          `hover:bg-blue-500 text-[18px] hover:text-white py-3 px-7 font-semibold rounded ${
+          `hover:bg-blue-500 text-[18px] text-white hover:text-white py-3 px-7 font-semibold rounded ${
             isActive ? "border-b-4 rounded-none border-blue-500" : ""
           }`
         }
@@ -16,7 +16,7 @@ const Navbar = () => {
 
       <NavLink
         className={({ isActive }) =>
-          `hover:bg-blue-500 text-[18px] hover:text-white py-3 px-7 font-semibold rounded ${
+          `hover:bg-blue-500 text-[18px] text-white hover:text-white py-3 px-7 font-semibold rounded ${
             isActive ? "border-b-4 rounded-none border-blue-500" : ""
           }`
         }
@@ -27,7 +27,7 @@ const Navbar = () => {
 
       <NavLink
         className={({ isActive }) =>
-          `hover:bg-blue-500 text-[18px] hover:text-white py-3 px-7 font-semibold rounded ${
+          `hover:bg-blue-500 text-[18px] text-white hover:text-white py-3 px-7 font-semibold rounded ${
             isActive ? "border-b-4 rounded-none border-blue-500" : ""
           }`
         }
@@ -38,7 +38,7 @@ const Navbar = () => {
 
       <NavLink
         className={({ isActive }) =>
-          `hover:bg-blue-500 text-[18px] hover:text-white py-3 px-7 font-semibold rounded ${
+          `hover:bg-blue-500 text-[18px] text-white hover:text-white py-3 px-7 font-semibold rounded ${
             isActive ? "border-b-4 rounded-none border-blue-500" : ""
           }`
         }
@@ -49,7 +49,7 @@ const Navbar = () => {
 
       <NavLink
         className={({ isActive }) =>
-          `hover:bg-blue-500 text-[18px] hover:text-white py-3 px-7 font-semibold rounded ${
+          `hover:bg-blue-500 text-[18px] text-white hover:text-white py-3 px-7 font-semibold rounded ${
             isActive ? "border-b-4 rounded-none border-blue-500" : ""
           }`
         }
@@ -133,7 +133,7 @@ const Navbar = () => {
             className="max-w-12"
             alt="Logo"
           />
-          <p className="text-blue-500 font-extrabold text-2xl">Blogify</p>
+          <h1 className="text-white font-extrabold text-3xl">Blogify</h1>
         </Link>
       </div>
       <div className="navbar-center hidden lg:flex">
