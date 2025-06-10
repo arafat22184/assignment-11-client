@@ -1,9 +1,10 @@
-import React from "react";
+/* eslint-disable no-unused-vars */
 import { PhotoProvider, PhotoView } from "react-photo-view";
 import "react-photo-view/dist/react-photo-view.css";
 import { motion } from "framer-motion";
 import { useInView } from "react-intersection-observer";
 import { Typewriter } from "react-simple-typewriter";
+import { MdOutlineKeyboardDoubleArrowRight } from "react-icons/md";
 
 const images = [
   "https://i.ibb.co/FkcWHYKG/Astronaut.jpg",
@@ -77,6 +78,13 @@ const OurGallery = () => {
             ))}
           </div>
         </PhotoProvider>
+      </div>
+
+      <div className="flex justify-center my-5">
+        <button className="bg-blue-600 hover:bg-blue-700 py-3 px-8 font-bold rounded-2xl flex items-center justify-center gap-1 cursor-pointer">
+          See More
+          <MdOutlineKeyboardDoubleArrowRight size={25} />
+        </button>
       </div>
     </section>
   );

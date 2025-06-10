@@ -22,15 +22,15 @@ const Footer = () => {
           id="svg"
           viewBox="0 0 1440 200"
           xmlns="http://www.w3.org/2000/svg"
-          class="transition duration-300 ease-in-out delay-150"
+          className="transition duration-300 ease-in-out delay-150"
         >
           <path
             d="M 0,400 L 0,150 C 86.32535885167468,163.26315789473685 172.65071770334936,176.5263157894737 258,156 C 343.34928229665064,135.4736842105263 427.72248803827745,81.15789473684211 532,80 C 636.2775119617226,78.84210526315789 760.4593301435407,130.84210526315786 873,158 C 985.5406698564593,185.15789473684214 1086.4401913875597,187.47368421052633 1179,182 C 1271.5598086124403,176.52631578947367 1355.77990430622,163.26315789473682 1440,150 L 1440,400 L 0,400 Z"
             stroke="none"
-            stroke-width="0"
+            strokeWidth="0"
             fill="#1d293d"
-            fill-opacity="1"
-            class="transition-all duration-300 ease-in-out delay-150 path-0"
+            fillOpacity="1"
+            className="transition-all duration-300 ease-in-out delay-150 path-0"
           ></path>
         </svg>
       </div>

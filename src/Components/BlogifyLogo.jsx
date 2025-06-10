@@ -5,9 +5,9 @@ const BlogifyLogo = () => {
     <>
       <svg
         xmlns="http://www.w3.org/2000/svg"
-        width="1132"
+        width="700"
         height="324"
-        viewBox="0 0 1132 324"
+        viewBox="0 0 1300 324"
         fill="none"
       >
         <path
@@ -47,8 +47,8 @@ const BlogifyLogo = () => {
             y2="322.364"
             gradientUnits="userSpaceOnUse"
           >
-            <stop stop-color="#948AA8" stop-opacity="0.3" />
-            <stop offset="1" stop-color="#948AA8" stop-opacity="0" />
+            <stop stopColor="#948AA8" stopOpacity="0.3" />
+            <stop offset="1" stopColor="#948AA8" stopOpacity="0" />
           </linearGradient>
           <linearGradient
             id="paint1_linear_1044_671"
@@ -58,8 +58,8 @@ const BlogifyLogo = () => {
             y2="250.125"
             gradientUnits="userSpaceOnUse"
           >
-            <stop stop-color="#948AA8" stop-opacity="0.3" />
-            <stop offset="1" stop-color="#948AA8" stop-opacity="0" />
+            <stop stopColor="#948AA8" stopOpacity="0.3" />
+            <stop offset="1" stopColor="#948AA8" stopOpacity="0" />
           </linearGradient>
           <linearGradient
             id="paint2_linear_1044_671"
@@ -69,8 +69,8 @@ const BlogifyLogo = () => {
             y2="250.125"
             gradientUnits="userSpaceOnUse"
           >
-            <stop stop-color="#948AA8" stop-opacity="0.3" />
-            <stop offset="1" stop-color="#948AA8" stop-opacity="0" />
+            <stop stopColor="#948AA8" stopOpacity="0.3" />
+            <stop offset="1" stopColor="#948AA8" stopOpacity="0" />
           </linearGradient>
           <linearGradient
             id="paint3_linear_1044_671"
@@ -80,8 +80,8 @@ const BlogifyLogo = () => {
             y2="322.705"
             gradientUnits="userSpaceOnUse"
           >
-            <stop stop-color="#948AA8" stop-opacity="0.3" />
-            <stop offset="1" stop-color="#948AA8" stop-opacity="0" />
+            <stop stopColor="#948AA8" stopOpacity="0.3" />
+            <stop offset="1" stopColor="#948AA8" stopOpacity="0" />
           </linearGradient>
           <linearGradient
             id="paint4_linear_1044_671"
@@ -91,8 +91,8 @@ const BlogifyLogo = () => {
             y2="254.214"
             gradientUnits="userSpaceOnUse"
           >
-            <stop stop-color="#948AA8" stop-opacity="0.3" />
-            <stop offset="1" stop-color="#948AA8" stop-opacity="0" />
+            <stop stopColor="#948AA8" stopOpacity="0.3" />
+            <stop offset="1" stopColor="#948AA8" stopOpacity="0" />
           </linearGradient>
           <linearGradient
             id="paint5_linear_1044_671"
@@ -102,8 +102,8 @@ const BlogifyLogo = () => {
             y2="250.125"
             gradientUnits="userSpaceOnUse"
           >
-            <stop stop-color="#948AA8" stop-opacity="0.3" />
-            <stop offset="1" stop-color="#948AA8" stop-opacity="0" />
+            <stop stopColor="#948AA8" stopOpacity="0.3" />
+            <stop offset="1" stopColor="#948AA8" stopOpacity="0" />
           </linearGradient>
           <linearGradient
             id="paint6_linear_1044_671"
@@ -113,8 +113,8 @@ const BlogifyLogo = () => {
             y2="250.125"
             gradientUnits="userSpaceOnUse"
           >
-            <stop stop-color="#948AA8" stop-opacity="0.3" />
-            <stop offset="1" stop-color="#948AA8" stop-opacity="0" />
+            <stop stopColor="#948AA8" stopOpacity="0.3" />
+            <stop offset="1" stopColor="#948AA8" stopOpacity="0" />
           </linearGradient>
         </defs>
       </svg>
