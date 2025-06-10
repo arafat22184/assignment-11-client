@@ -1,11 +1,98 @@
 import Lottie from "lottie-react";
 import { FcGoogle } from "react-icons/fc";
-import { MdEmail, MdLock, MdLogin, MdPersonAdd } from "react-icons/md";
-import { Link } from "react-router";
+import {
+  MdEmail,
+  MdErrorOutline,
+  MdLock,
+  MdLogin,
+  MdPersonAdd,
+} from "react-icons/md";
+import { Link, useNavigate } from "react-router";
 import registerAnimation from "../assets/Animations/registerAnimation.json";
 import { HiPhotograph, HiUser } from "react-icons/hi";
+import { useContext, useState } from "react";
+import { AuthContext } from "../Provider/AuthProvider";
+import { toast } from "react-toastify";
 
 const Register = () => {
+  const [error, setError] = useState("");
+  const navigate = useNavigate();
+  const { createUser, updateUser, setUser, location } = useContext(AuthContext);
+
+  const handlePassCheck = (e) => {
+    const password = e.target.value;
+    if (password.length < 6) {
+      setError("Password must be at least 6 characters long.");
+      return;
+    }
+
+    if (!/[A-Z]/.test(password)) {
+      setError("Password must contain at least one uppercase letter.");
+      return;
+    }
+
+    if (!/[a-z]/.test(password)) {
+      setError("Password must contain at least one lowercase letter.");
+      return;
+    }
+
+    setError("");
+  };
+
+  const handleRegister = (e) => {
+    e.preventDefault();
+    const form = e.target;
+    const name = form.name.value;
+    const photoURL = form.photoURL.value;
+    const email = form.email.value;
+    const password = form.password.value;
+
+    if (error) {
+      return;
+    }
+
+    createUser(email, password)
+      .then((result) => {
+        navigate(`${location ? location : "/"}`);
+        const user = result.user;
+        updateUser({ displayName: name, photoURL: photoURL })
+          .then(() => {
+            setUser({ ...user, displayName: name, photoURL: photoURL });
+            toast.success("Account created successfully! Welcome aboard 🎉", {
+              position: "top-right",
+              autoClose: 5000,
+              hideProgressBar: false,
+              closeOnClick: false,
+              pauseOnHover: true,
+              draggable: true,
+              progress: undefined,
+              theme: "colored",
+            });
+          })
+          .catch(() => setUser(user));
+      })
+      .catch((error) => {
+        if (error.message === "Firebase: Error (auth/email-already-in-use).") {
+          setError(
+            "This email is already registered. Please log in or use a different email."
+          );
+        }
+        toast.error(
+          "Registration failed. Please verify your information and try again!",
+          {
+            position: "top-right",
+            autoClose: 5000,
+            hideProgressBar: false,
+            closeOnClick: false,
+            pauseOnHover: true,
+            draggable: true,
+            progress: undefined,
+            theme: "colored",
+          }
+        );
+      });
+  };
+
   return (
     <div
       className="md:flex md:justify-center md:items-center md:gap-28 px-4 py-16 bg-cover bg-no-repeat bg-center relative"
@@ -21,7 +108,7 @@ const Register = () => {
           Register to Blogify
         </h2>
 
-        <form className="space-y-4">
+        <form onSubmit={handleRegister} className="space-y-4">
           <div>
             <label className={`mb-1 flex items-center gap-2 text-white`}>
               <HiUser className="text-xl" />
@@ -70,12 +157,20 @@ const Register = () => {
             <input
               type="password"
               name="password"
+              onChange={handlePassCheck}
               required
               className="w-full px-4 py-2 border border-white rounded-md focus:outline-none focus:ring-2 focus:ring-blue-400"
               placeholder="Your password"
               autoComplete="true"
             />
           </div>
+
+          {error && (
+            <p className="text-red-500 bg-black/50 pl-2 py-1 flex items-center gap-1 rounded-md">
+              <MdErrorOutline />
+              {error}
+            </p>
+          )}
 
           <button
             type="submit"
