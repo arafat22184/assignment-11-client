@@ -17,7 +17,8 @@ import { toast } from "react-toastify";
 const Register = () => {
   const [error, setError] = useState("");
   const navigate = useNavigate();
-  const { createUser, updateUser, setUser, location } = useContext(AuthContext);
+  const { createUser, updateUser, setUser, location, googleLogIn } =
+    useContext(AuthContext);
 
   const handlePassCheck = (e) => {
     const password = e.target.value;
@@ -90,6 +91,40 @@ const Register = () => {
             theme: "colored",
           }
         );
+      });
+  };
+
+  const handleGoogleLogin = () => {
+    googleLogIn()
+      .then((result) => {
+        if (result.user.email) {
+          navigate(`${location ? location : "/"}`);
+
+          toast.success("Account created successfully! Welcome aboard 🎉", {
+            position: "top-right",
+            autoClose: 5000,
+            hideProgressBar: false,
+            closeOnClick: false,
+            pauseOnHover: true,
+            draggable: true,
+            progress: undefined,
+            theme: "colored",
+          });
+        }
+      })
+      .catch((error) => {
+        if (error) {
+          toast.error("Registration failed. Please try again!", {
+            position: "top-right",
+            autoClose: 5000,
+            hideProgressBar: false,
+            closeOnClick: false,
+            pauseOnHover: true,
+            draggable: true,
+            progress: undefined,
+            theme: "colored",
+          });
+        }
       });
   };
 
@@ -183,7 +218,10 @@ const Register = () => {
         <div className="divider text-white font-bold">OR</div>
 
         <div className="mt-6">
-          <button className="w-full flex items-center justify-center gap-2 py-2 font-semibold rounded-md transition duration-300 text-white cursor-pointer bg-white/7 hover:bg-blue-500">
+          <button
+            onClick={handleGoogleLogin}
+            className="w-full flex items-center justify-center gap-2 py-2 font-semibold rounded-md transition duration-300 text-white cursor-pointer bg-white/7 hover:bg-blue-500"
+          >
             <div className="bg-white p-1 rounded-full">
               <FcGoogle />
             </div>{" "}
