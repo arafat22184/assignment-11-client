@@ -32,17 +32,17 @@ const BlogDetails = () => {
   const [allComments, setAllComments] = useState(comments);
 
   const navigate = useNavigate();
-  const isAuthor = user?.email === author.email;
+  const isAuthor = user?.email === author?.email;
   const canComment = !isAuthor;
 
   const [isLiked, setIsLiked] = useState(false);
-  const [likeCount, setLikeCount] = useState(likes.length || 0);
+  const [likeCount, setLikeCount] = useState(likes?.length || 0);
 
   useEffect(() => {
     if (user && likes?.length) {
       setIsLiked(likes.includes(user.uid));
     }
-    setLikeCount(likes.length);
+    setLikeCount(likes?.length);
   }, [user, likes]);
 
   const formattedDate = new Date(createdAt).toLocaleDateString("en-US", {
@@ -51,8 +51,9 @@ const BlogDetails = () => {
     day: "numeric",
   });
 
-  const todayDate = new Date().toLocaleDateString("en-US");
+  const todayDate = new Date().toISOString();
 
+  // Data Added to Wishlist
   const handleWishlist = () => {
     if (!user?.email) {
       navigate("/login");
@@ -152,7 +153,7 @@ const BlogDetails = () => {
     >
       <div className="max-w-4xl mx-auto">
         <button
-          className="flex items-center gap-2 text-blue-400 hover:text-blue-300 mb-6 transition-colors"
+          className="flex items-center gap-2 text-blue-400 hover:text-blue-300 mb-6 transition-colors cursor-pointer"
           onClick={() => window.history.back()}
         >
           <BiLeftArrow /> Back to blogs
@@ -165,8 +166,16 @@ const BlogDetails = () => {
           <h1 className="text-3xl md:text-4xl font-bold mb-4">{title}</h1>
           <div className="flex items-center gap-4 text-slate-400 text-sm">
             <div className="flex items-center gap-1">
-              <FiUser className="text-blue-400" />
-              <span>{author}</span>
+              {author.photo ? (
+                <img
+                  className="w-7 border border-blue-400 rounded-full"
+                  src={author.photo}
+                  alt={`${author.name} photo`}
+                />
+              ) : (
+                <FiUser className="text-blue-400" />
+              )}
+              <span>{author.name}</span>
             </div>
             <div className="flex items-center gap-1">
               <FiClock className="text-blue-400" />
@@ -228,7 +237,7 @@ const BlogDetails = () => {
             {isLiked ? "Liked" : "Like"} ({likeCount})
           </button>
           {isAuthor && (
-            <button className="flex items-center gap-2 px-4 py-2 bg-slate-700 hover:bg-slate-600 text-white rounded-md transition-colors">
+            <button className="flex items-center gap-2 px-4 py-2 bg-slate-700 hover:bg-slate-600 text-white rounded-md transition-colors cursor-pointer">
               <FiEdit2 /> Edit Blog
             </button>
           )}
@@ -250,7 +259,7 @@ const BlogDetails = () => {
               />
               <button
                 type="submit"
-                className="mt-3 px-6 py-2 bg-blue-500 hover:bg-blue-600 text-white rounded-md transition-colors flex items-center justify-center gap-2"
+                className="mt-3 px-6 py-2 bg-blue-500 hover:bg-blue-600 text-white rounded-md transition-colors flex items-center justify-center gap-2 cursor-pointer"
               >
                 Post Comment <BiCommentAdd size={20} />
               </button>

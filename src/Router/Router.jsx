@@ -7,6 +7,7 @@ import AllBlogs from "../Pages/AllBlogs";
 import LoadingSpinner from "../Components/LoadingSpinner";
 import DetailsBlog from "../Pages/DetailsBlog";
 import PrivateRoute from "../Provider/PrivateRoute";
+import AddBlog from "../Pages/AddBlog";
 
 const router = createBrowserRouter([
   {
@@ -43,6 +44,14 @@ const router = createBrowserRouter([
         loader: ({ params }) =>
           fetch(`${import.meta.env.VITE_API_LINK}/blogs/${params.id}`),
         hydrateFallbackElement: <LoadingSpinner></LoadingSpinner>,
+      },
+      {
+        path: "addBlog",
+        element: (
+          <PrivateRoute>
+            <AddBlog></AddBlog>
+          </PrivateRoute>
+        ),
       },
       {
         path: "/login",
