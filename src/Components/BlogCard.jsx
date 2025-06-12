@@ -1,13 +1,37 @@
 /* eslint-disable no-unused-vars */
 import { motion } from "framer-motion";
 import { FiHeart } from "react-icons/fi";
-import { useState } from "react";
+import { use, useState } from "react";
+import { AuthContext } from "../Provider/AuthProvider";
+import { toast } from "react-toastify";
+import { useNavigate } from "react-router";
 
 const BlogCard = ({ blog }) => {
+  const { user } = use(AuthContext);
   const [isHovered, setIsHovered] = useState(false);
   const [isLiked, setIsLiked] = useState(false);
+  const navigate = useNavigate();
 
   const { image, title, category, shortDescription } = blog;
+
+  const handleWishlist = () => {
+    if (!user && !user?.email) {
+      navigate("/login");
+      toast.error("Please Login First", {
+        position: "top-right",
+        autoClose: 5000,
+        hideProgressBar: false,
+        closeOnClick: false,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "colored",
+      });
+      return;
+    } else {
+      setIsLiked(!isLiked);
+    }
+  };
 
   return (
     <motion.div
@@ -69,8 +93,8 @@ const BlogCard = ({ blog }) => {
           </motion.div>
 
           <motion.button
-            className="p-2 rounded-full"
-            onClick={() => setIsLiked(!isLiked)}
+            className="p-2 rounded-full cursor-pointer"
+            onClick={handleWishlist}
             whileTap={{ scale: 0.9 }}
             data-tooltip-id="like-tooltip"
           >
