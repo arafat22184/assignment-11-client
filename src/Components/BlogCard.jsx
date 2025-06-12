@@ -1,19 +1,25 @@
 /* eslint-disable no-unused-vars */
 import { motion } from "framer-motion";
 import { FiHeart } from "react-icons/fi";
-import { use, useState } from "react";
+import { use, useEffect, useState } from "react";
 import { AuthContext } from "../Provider/AuthProvider";
 import { toast } from "react-toastify";
 import { useNavigate } from "react-router";
 import axios from "axios";
 
 const BlogCard = ({ blog }) => {
+  const { image, title, category, shortDescription, _id } = blog;
   const { user } = use(AuthContext);
   const [isHovered, setIsHovered] = useState(false);
   const [isLiked, setIsLiked] = useState(false);
   const navigate = useNavigate();
 
-  const { image, title, category, shortDescription, _id } = blog;
+  // For Rerendering
+  useEffect(() => {
+    if (user && blog?.likes?.length) {
+      setIsLiked(blog.likes.includes(user.uid));
+    }
+  }, [user, blog]);
 
   const handleWishlist = () => {
     if (!user && !user?.email) {
