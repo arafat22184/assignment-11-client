@@ -239,7 +239,7 @@ const AllBlogs = () => {
               placeholder="Search blogs by title..."
               className="flex-1 px-5 py-2 text-white placeholder-slate-400 bg-transparent rounded-l-full focus:outline-none"
             />
-            <span className="bg-blue-500 text-white px-5 py-3 rounded-r-full cursor-default">
+            <span className="bg-blue-500 text-white px-5 py-3 rounded-r-full cursor-pointer">
               <BiSearchAlt className="text-xl" />
             </span>
           </form>
