@@ -11,8 +11,8 @@ const BlogCard = ({ blog }) => {
   const { image, title, category, shortDescription, _id } = blog;
   const { user } = use(AuthContext);
   const [isHovered, setIsHovered] = useState(false);
-  const [isLiked, setIsLiked] = useState(false);
   const navigate = useNavigate();
+  const [isLiked, setIsLiked] = useState(false);
 
   // For Rerendering
   useEffect(() => {
