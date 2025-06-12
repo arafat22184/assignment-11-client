@@ -5,6 +5,7 @@ import { use, useState } from "react";
 import { AuthContext } from "../Provider/AuthProvider";
 import { toast } from "react-toastify";
 import { useNavigate } from "react-router";
+import axios from "axios";
 
 const BlogCard = ({ blog }) => {
   const { user } = use(AuthContext);
@@ -12,7 +13,7 @@ const BlogCard = ({ blog }) => {
   const [isLiked, setIsLiked] = useState(false);
   const navigate = useNavigate();
 
-  const { image, title, category, shortDescription } = blog;
+  const { image, title, category, shortDescription, _id } = blog;
 
   const handleWishlist = () => {
     if (!user && !user?.email) {
@@ -29,7 +30,33 @@ const BlogCard = ({ blog }) => {
       });
       return;
     } else {
-      setIsLiked(!isLiked);
+      const userId = user.uid;
+      const wishListData = { userId, blogId: _id };
+
+      axios
+        .post(`${import.meta.env.VITE_API_LINK}/wishlists`, wishListData)
+        .then((data) => {
+          if (data?.data?.added) {
+            setIsLiked(true);
+          }
+          if (data?.data?.removed) {
+            setIsLiked(false);
+          }
+        })
+        .catch(
+          (error) =>
+            error &&
+            toast.error("Something went wrong Please try again", {
+              position: "top-right",
+              autoClose: 5000,
+              hideProgressBar: false,
+              closeOnClick: false,
+              pauseOnHover: true,
+              draggable: true,
+              progress: undefined,
+              theme: "colored",
+            })
+        );
     }
   };
 
