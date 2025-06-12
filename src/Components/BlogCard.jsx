@@ -59,7 +59,7 @@ const BlogCard = ({ blog }) => {
             className="mt-1"
           >
             <motion.a
-              href={`/blogs/${blog._id}`}
+              href={`/blog/${blog._id}`}
               className="block px-4 py-2 text-center bg-blue-500 text-white font-medium rounded-md hover:bg-blue-400 transition-colors"
               whileHover={{ scale: 1.02 }}
               whileTap={{ scale: 0.98 }}

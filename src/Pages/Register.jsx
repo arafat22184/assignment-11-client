@@ -37,6 +37,11 @@ const Register = () => {
       return;
     }
 
+    if (!/[!@#$%^&*(),.?":{}|<>]/.test(password)) {
+      setError("Password must contain at least one special character.");
+      return;
+    }
+
     setError("");
   };
 

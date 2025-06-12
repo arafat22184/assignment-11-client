@@ -141,6 +141,7 @@
 
 // export default AllBlogs;
 
+/* eslint-disable no-unused-vars */
 import { useEffect, useState } from "react";
 import { BiSearchAlt } from "react-icons/bi";
 import { motion } from "framer-motion";

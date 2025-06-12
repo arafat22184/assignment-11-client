@@ -5,6 +5,8 @@ import Register from "../Pages/Register";
 import Home from "../Pages/Home";
 import AllBlogs from "../Pages/AllBlogs";
 import LoadingSpinner from "../Components/LoadingSpinner";
+import DetailsBlog from "../Pages/DetailsBlog";
+import PrivateRoute from "../Provider/PrivateRoute";
 
 const router = createBrowserRouter([
   {
@@ -29,6 +31,17 @@ const router = createBrowserRouter([
           const res = await fetch(`${import.meta.env.VITE_API_LINK}/blogs`);
           return res.json();
         },
+        hydrateFallbackElement: <LoadingSpinner></LoadingSpinner>,
+      },
+      {
+        path: "/blog/:id",
+        element: (
+          <PrivateRoute>
+            <DetailsBlog></DetailsBlog>
+          </PrivateRoute>
+        ),
+        loader: ({ params }) =>
+          fetch(`${import.meta.env.VITE_API_LINK}/blogs/${params.id}`),
         hydrateFallbackElement: <LoadingSpinner></LoadingSpinner>,
       },
       {
