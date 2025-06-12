@@ -28,6 +28,9 @@ const BlogDetails = () => {
     likes,
     _id,
   } = useLoaderData();
+
+  const [allComments, setAllComments] = useState(comments);
+
   const navigate = useNavigate();
   const isAuthor = user?.email === author.email;
   const canComment = !isAuthor;
@@ -98,6 +101,7 @@ const BlogDetails = () => {
     axios
       .patch(`${import.meta.env.VITE_API_LINK}/blogs/${_id}`, commentData)
       .then((res) => {
+        setAllComments([...allComments, commentData]);
         if (res.data.success) {
           toast.success("Comment posted successfully", {
             position: "top-right",
@@ -170,7 +174,7 @@ const BlogDetails = () => {
             </div>
             <div className="flex items-center gap-1">
               <FiMessageSquare className="text-blue-400" />
-              <span>{comments?.length || 0} comments</span>
+              <span>{allComments?.length || 0} comments</span>
             </div>
           </div>
         </div>
@@ -233,7 +237,7 @@ const BlogDetails = () => {
         <div className="border-t border-slate-700 pt-8">
           <h3 className="text-2xl font-bold mb-6 flex items-center gap-2">
             <FiMessageSquare className="text-blue-400" />
-            Comments ({comments?.length || 0})
+            Comments ({allComments?.length || 0})
           </h3>
 
           {canComment ? (
@@ -258,8 +262,8 @@ const BlogDetails = () => {
           )}
 
           <div className="space-y-6">
-            {comments?.length > 0 ? (
-              comments.map((comment, index) => (
+            {allComments?.length > 0 ? (
+              allComments.map((comment, index) => (
                 <div
                   key={index}
                   className="bg-slate-800/50 p-4 rounded-lg border border-slate-700"
