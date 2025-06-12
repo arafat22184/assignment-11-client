@@ -2,12 +2,13 @@
 import { useLoaderData, Link } from "react-router";
 import BlogCard from "./BlogCard";
 import { motion } from "framer-motion";
+import { MdOutlineKeyboardDoubleArrowRight } from "react-icons/md";
 
 const RecentBlogs = () => {
   const blogs = useLoaderData();
 
   return (
-    <section className="relative py-20 px-4 md:px-6 lg:px-0 bg-slate-950 overflow-hidden">
+    <section className="relative py-20 px-4 md:px-6 xl:px-0 bg-slate-950 overflow-hidden">
       {/* Title */}
       <motion.div
         initial={{ opacity: 0, y: 20 }}
@@ -59,17 +60,17 @@ const RecentBlogs = () => {
 
       {/* CTA Button */}
       <motion.div
-        className="text-center mt-12"
+        className="flex justify-center mt-12"
         initial={{ opacity: 0, y: 20 }}
         whileInView={{ opacity: 1, y: 0 }}
         viewport={{ once: true }}
         transition={{ duration: 0.6, delay: 0.3 }}
       >
         <Link
-          to="/blogs"
-          className="inline-block px-6 py-3 bg-blue-400 text-slate-950 font-semibold rounded-md hover:bg-blue-300 transition duration-300 shadow hover:shadow-lg"
+          to="/allBlogs"
+          className="flex justify-center items-center gap-1 px-6 py-3 bg-blue-500 text-white font-semibold rounded-md hover:bg-blue-400 transition duration-300 shadow hover:shadow-lg"
         >
-          View All Blogs
+          View All Blogs <MdOutlineKeyboardDoubleArrowRight size={25} />
         </Link>
       </motion.div>
     </section>
