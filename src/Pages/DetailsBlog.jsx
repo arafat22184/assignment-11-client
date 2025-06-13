@@ -380,7 +380,16 @@ const BlogDetails = () => {
   const handleWishlist = () => {
     if (!user?.email) {
       navigate("/login");
-      toast.error("Please Login First", { theme: "colored" });
+      toast.error("Please Login First", {
+        position: "top-right",
+        autoClose: 5000,
+        hideProgressBar: false,
+        closeOnClick: false,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "colored",
+      });
       return;
     }
 
@@ -393,10 +402,30 @@ const BlogDetails = () => {
         if (data?.data?.added) {
           setIsLiked(true);
           setLikeCount((prev) => prev + 1);
+          toast.success("Blog added to wishlist", {
+            position: "top-right",
+            autoClose: 5000,
+            hideProgressBar: false,
+            closeOnClick: false,
+            pauseOnHover: true,
+            draggable: true,
+            progress: undefined,
+            theme: "colored",
+          });
         }
         if (data?.data?.removed) {
           setIsLiked(false);
           setLikeCount((prev) => prev - 1);
+          toast.error("Blog removed from wishlist", {
+            position: "top-right",
+            autoClose: 5000,
+            hideProgressBar: false,
+            closeOnClick: false,
+            pauseOnHover: true,
+            draggable: true,
+            progress: undefined,
+            theme: "colored",
+          });
         }
       })
       .catch(() => {
@@ -556,7 +585,7 @@ const BlogDetails = () => {
               animate={{ scale: isLiked ? [1, 1.2, 1] : 1 }}
               transition={{ duration: 0.3 }}
             />
-            {isLiked ? "Liked" : "Like"} ({likeCount})
+            {isLiked ? "Wishlisted" : "Wishlist"} ({likeCount})
           </button>
           {isAuthor && (
             <button className="flex items-center gap-2 px-4 py-2 bg-slate-700 hover:bg-slate-600 text-white rounded-md transition-colors cursor-pointer">

@@ -6,7 +6,7 @@ import { AuthContext } from "../Provider/AuthProvider";
 import { toast } from "react-toastify";
 import { useNavigate } from "react-router";
 import axios from "axios";
-import { FaReadme } from "react-icons/fa";
+import { FaEye } from "react-icons/fa";
 
 const BlogCard = ({ blog }) => {
   const { image, title, category, shortDescription, _id } = blog;
@@ -45,9 +45,29 @@ const BlogCard = ({ blog }) => {
         .then((data) => {
           if (data?.data?.added) {
             setIsLiked(true);
+            toast.success("Blog added to wishlist", {
+              position: "top-right",
+              autoClose: 5000,
+              hideProgressBar: false,
+              closeOnClick: false,
+              pauseOnHover: true,
+              draggable: true,
+              progress: undefined,
+              theme: "colored",
+            });
           }
           if (data?.data?.removed) {
             setIsLiked(false);
+            toast.error("Blog removed from wishlist", {
+              position: "top-right",
+              autoClose: 5000,
+              hideProgressBar: false,
+              closeOnClick: false,
+              pauseOnHover: true,
+              draggable: true,
+              progress: undefined,
+              theme: "colored",
+            });
           }
         })
         .catch(
@@ -122,7 +142,7 @@ const BlogCard = ({ blog }) => {
               whileHover={{ scale: 1.02 }}
               whileTap={{ scale: 0.98 }}
             >
-              Read More <FaReadme />
+              <FaEye /> Details
             </motion.a>
           </motion.div>
 
