@@ -13,7 +13,7 @@ import { Link } from "react-router";
 
 const Footer = () => {
   return (
-    <footer className="relative bg-slate-800 text-white mt-40">
+    <footer className="relative bg-slate-800 text-white mt-52">
       {/* Better Wave Divider */}
       <div className="absolute top-0 left-0 w-full overflow-hidden leading-none -translate-y-full">
         <svg

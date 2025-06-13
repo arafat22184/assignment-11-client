@@ -59,7 +59,7 @@ const FeaturedBlogs = () => {
         accessorFn: (row) => row.author?.name || "Unknown",
         id: "author",
         cell: ({ row }) => (
-          <div className="flex items-center gap-2">
+          <div className="flex items-center flex-col xl:flex-row gap-2">
             <img
               src={row.original.author?.photo}
               alt={row.original.author?.name}
@@ -115,79 +115,77 @@ const FeaturedBlogs = () => {
     return <div className="p-6 text-red-500">Error: {error.message}</div>;
 
   return (
-    <div className="min-h-screen bg-slate-950 px-4 py-10 text-white">
-      <div className="max-w-7xl mx-auto">
-        <h2 className="text-4xl md:text-5xl font-bold text-white dmSerif text-center mb-10">
-          Featured <span className="text-blue-400">Blogs</span>
-        </h2>
-        <div className="overflow-x-auto bg-slate-900 border border-slate-800 rounded-lg">
-          <table className="min-w-full text-sm">
-            <thead className="bg-slate-800 text-blue-400">
-              {table.getHeaderGroups().map((headerGroup) => (
-                <tr key={headerGroup.id}>
-                  {headerGroup.headers.map((header) => {
-                    const isSorted = header.column.getIsSorted();
-                    return (
-                      <th
-                        key={header.id}
-                        onClick={header.column.getToggleSortingHandler()}
-                        title="Click to sort"
-                        className="px-4 py-3 text-left cursor-pointer select-none whitespace-nowrap hover:text-blue-300 transition-colors"
-                      >
-                        <div className="flex items-center gap-2 text-white">
-                          {flexRender(
-                            header.column.columnDef.header,
-                            header.getContext()
-                          )}
-                          {isSorted === "asc" ? (
-                            <FaSortAmountUp className="inline-block text-yellow-400" />
-                          ) : isSorted === "desc" ? (
-                            <FaSortAmountDown className="inline-block text-yellow-400" />
-                          ) : (
-                            <span>
-                              <FaSortAmountUp className="inline-block" />
-                            </span>
-                          )}
-                        </div>
-                      </th>
-                    );
-                  })}
-                </tr>
-              ))}
-            </thead>
-            <tbody>
-              {table.getRowModel().rows.length === 0 ? (
-                <tr>
-                  <td
-                    colSpan={columns.length}
-                    className="p-4 text-center text-gray-400"
-                  >
-                    No featured blogs found.
-                  </td>
-                </tr>
-              ) : (
-                table.getRowModel().rows.map((row) => (
-                  <motion.tr
-                    key={row.id}
-                    className="border-t border-slate-800 cursor-pointer"
-                    whileHover={{ scale: 1.01, backgroundColor: "#1e293b" }}
-                    transition={{ type: "spring", stiffness: 300, damping: 20 }}
-                    onClick={() => navigate(`/blog/${row.original._id}`)}
-                  >
-                    {row.getVisibleCells().map((cell) => (
-                      <td key={cell.id} className="px-4 py-4 align-top">
+    <div className="min-h-screen bg-slate-950 px-4 py-10 text-white max-w-7xl mx-auto">
+      <h2 className="text-4xl md:text-5xl font-bold text-white dmSerif text-center mb-10">
+        Featured <span className="text-blue-400">Blogs</span>
+      </h2>
+      <div className="xl:overflow-hidden overflow-x-auto bg-slate-900 border border-slate-800 rounded-lg">
+        <table className="min-w-3xl md:min-w-2xl max-w-full text-sm">
+          <thead className="bg-slate-800 text-blue-400">
+            {table.getHeaderGroups().map((headerGroup) => (
+              <tr key={headerGroup.id}>
+                {headerGroup.headers.map((header) => {
+                  const isSorted = header.column.getIsSorted();
+                  return (
+                    <th
+                      key={header.id}
+                      onClick={header.column.getToggleSortingHandler()}
+                      title="Click to sort"
+                      className="px-4 py-3 text-left cursor-pointer select-none whitespace-nowrap hover:text-blue-300 transition-colors"
+                    >
+                      <div className="flex items-center gap-2 text-white">
                         {flexRender(
-                          cell.column.columnDef.cell,
-                          cell.getContext()
+                          header.column.columnDef.header,
+                          header.getContext()
                         )}
-                      </td>
-                    ))}
-                  </motion.tr>
-                ))
-              )}
-            </tbody>
-          </table>
-        </div>
+                        {isSorted === "asc" ? (
+                          <FaSortAmountUp className="inline-block text-yellow-400" />
+                        ) : isSorted === "desc" ? (
+                          <FaSortAmountDown className="inline-block text-yellow-400" />
+                        ) : (
+                          <span>
+                            <FaSortAmountUp className="inline-block" />
+                          </span>
+                        )}
+                      </div>
+                    </th>
+                  );
+                })}
+              </tr>
+            ))}
+          </thead>
+          <tbody>
+            {table.getRowModel().rows.length === 0 ? (
+              <tr>
+                <td
+                  colSpan={columns.length}
+                  className="p-4 text-center text-gray-400"
+                >
+                  No featured blogs found.
+                </td>
+              </tr>
+            ) : (
+              table.getRowModel().rows.map((row) => (
+                <motion.tr
+                  key={row.id}
+                  className="border-t border-slate-800 cursor-pointer"
+                  whileHover={{ scale: 1.01, backgroundColor: "#1e293b" }}
+                  transition={{ type: "spring", stiffness: 300, damping: 20 }}
+                  onClick={() => navigate(`/blog/${row.original._id}`)}
+                >
+                  {row.getVisibleCells().map((cell) => (
+                    <td key={cell.id} className="px-4 py-4 align-top">
+                      {flexRender(
+                        cell.column.columnDef.cell,
+                        cell.getContext()
+                      )}
+                    </td>
+                  ))}
+                </motion.tr>
+              ))
+            )}
+          </tbody>
+        </table>
       </div>
     </div>
   );
