@@ -40,6 +40,7 @@ const AddBlog = () => {
     const category = form.category.value;
     const tags = form.tags.value.split(",").map((tag) => tag.trim());
     const content = form.content.value;
+    const wordCount = content.trim().split(/\s+/).length;
     const shortDescription = form.shortDescription.value;
 
     const blogData = {
@@ -57,6 +58,7 @@ const AddBlog = () => {
       tags,
       likes: [],
       comments: [],
+      wordCount,
     };
 
     // Send Blog Data to DB
