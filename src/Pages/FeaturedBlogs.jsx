@@ -116,9 +116,17 @@ const FeaturedBlogs = () => {
 
   return (
     <div className="min-h-screen bg-slate-950 px-4 py-10 text-white max-w-7xl mx-auto">
-      <h2 className="text-4xl md:text-5xl font-bold text-white dmSerif text-center mb-10">
-        Featured <span className="text-blue-400">Blogs</span>
-      </h2>
+      {/* Section Header */}
+      <div className="mb-12 text-center">
+        <h2 className="text-4xl md:text-5xl font-bold text-white mb-4 dmSerif">
+          Featured <span className="text-blue-400">Blogs</span>
+        </h2>
+        <p className="text-slate-400 text-sm md:text-base max-w-2xl mx-auto">
+          Explore our top 10 handpicked blogs—expert insights, trending topics,
+          and must-read articles. Dive into quality content that informs and
+          inspires!
+        </p>
+      </div>
       <div className="xl:overflow-hidden overflow-x-auto bg-slate-900 border border-slate-800 rounded-lg">
         <table className="min-w-3xl md:min-w-2xl max-w-full text-sm">
           <thead className="bg-slate-800 text-blue-400">
