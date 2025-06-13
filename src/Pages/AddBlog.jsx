@@ -104,8 +104,8 @@ const AddBlog = () => {
       className="min-h-screen bg-slate-950 text-slate-100 px-4 py-12"
     >
       <div className="max-w-4xl mx-auto border border-slate-800 rounded-xl p-8 shadow-lg bg-slate-900">
-        <h2 className="text-3xl md:text-4xl font-bold mb-8 flex items-center justify-center gap-2 text-blue-400 ">
-          <FiEdit3 /> Create New Blog
+        <h2 className="flex items-center justify-center gap-2 text-3xl md:text-4xl font-bold text-white mb-4 dmSerif">
+          <FiEdit3 /> Create New <span className="text-blue-400">Blog</span>
         </h2>
 
         <form onSubmit={handleAddBlog} className="space-y-6">

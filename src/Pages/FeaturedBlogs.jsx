@@ -10,6 +10,13 @@ import {
 import { motion } from "framer-motion";
 import LoadingSpinner from "../Components/LoadingSpinner";
 import { FaSortAmountDown, FaSortAmountUp } from "react-icons/fa";
+import {
+  MdArticle,
+  MdPerson2,
+  MdDateRange,
+  MdLocalOffer,
+  MdFavorite,
+} from "react-icons/md";
 import { useNavigate } from "react-router";
 
 const FeaturedBlogs = () => {
@@ -34,7 +41,12 @@ const FeaturedBlogs = () => {
   const columns = useMemo(
     () => [
       {
-        header: "Blog",
+        header: (
+          <span className="flex items-center gap-1 text-lg">
+            <MdArticle className="text-green-400" />
+            Blog
+          </span>
+        ),
         accessorKey: "title",
         cell: ({ row }) => (
           <div className="flex items-center gap-3">
@@ -55,7 +67,12 @@ const FeaturedBlogs = () => {
         ),
       },
       {
-        header: "Author",
+        header: (
+          <span className="flex items-center gap-1 text-lg">
+            <MdPerson2 className="text-slate-400" />
+            Author
+          </span>
+        ),
         accessorFn: (row) => row.author?.name || "Unknown",
         id: "author",
         cell: ({ row }) => (
@@ -72,7 +89,12 @@ const FeaturedBlogs = () => {
         ),
       },
       {
-        header: "Published",
+        header: (
+          <span className="flex items-center gap-1 text-lg">
+            <MdDateRange className="text-green-400" />
+            Published
+          </span>
+        ),
         accessorFn: (row) =>
           new Date(row.createdAt).toLocaleDateString("en-US", {
             year: "numeric",
@@ -82,7 +104,12 @@ const FeaturedBlogs = () => {
         id: "date",
       },
       {
-        header: "Tags",
+        header: (
+          <span className="flex items-center gap-1 text-lg">
+            <MdLocalOffer className="text-blue-400" />
+            Tags
+          </span>
+        ),
         accessorFn: (row) => row.tags?.join(", "),
         id: "tags",
         cell: ({ getValue }) => (
@@ -90,9 +117,19 @@ const FeaturedBlogs = () => {
         ),
       },
       {
-        header: "Likes",
+        header: (
+          <span className="flex items-center gap-1 text-lg">
+            <MdFavorite className="text-red-500" />
+            Wishlisted
+          </span>
+        ),
         accessorFn: (row) => row.likes?.length || 0,
         id: "likes",
+        cell: ({ getValue }) => (
+          <span className="text-xs flex justify-center text-slate-400">
+            {getValue()}
+          </span>
+        ),
       },
     ],
     []
@@ -128,7 +165,7 @@ const FeaturedBlogs = () => {
         </p>
       </div>
       <div className="xl:overflow-hidden overflow-x-auto bg-slate-900 border border-slate-800 rounded-lg">
-        <table className="min-w-3xl md:min-w-2xl max-w-full text-sm">
+        <table className="min-w-4xl max-w-full text-sm">
           <thead className="bg-slate-800 text-blue-400">
             {table.getHeaderGroups().map((headerGroup) => (
               <tr key={headerGroup.id}>
@@ -182,7 +219,7 @@ const FeaturedBlogs = () => {
                   onClick={() => navigate(`/blog/${row.original._id}`)}
                 >
                   {row.getVisibleCells().map((cell) => (
-                    <td key={cell.id} className="px-4 py-4 align-top">
+                    <td key={cell.id} className="px-4 py-4 align-middle">
                       {flexRender(
                         cell.column.columnDef.cell,
                         cell.getContext()

@@ -78,9 +78,16 @@ const Wishlist = () => {
 
   return (
     <div className="bg-slate-950 px-4 py-10 text-white max-w-7xl mx-auto min-h-screen">
-      <h2 className="text-4xl md:text-5xl font-bold text-white mb-10 text-center dmSerif">
-        My <span className="text-blue-400">Wishlist</span>
-      </h2>
+      {/* Section Header */}
+      <div className="mb-12 text-center">
+        <h2 className="text-4xl md:text-5xl font-bold text-white mb-4 dmSerif">
+          My <span className="text-blue-400">Wishlists</span>
+        </h2>
+        <p className="text-slate-400 text-sm md:text-base max-w-2xl mx-auto">
+          View and manage your favorite blogs in one place. Easily revisit or
+          remove blogs you've wishlisted.
+        </p>
+      </div>
 
       {wishlist.length === 0 ? (
         <div className="text-center text-slate-400 text-lg">
@@ -92,7 +99,10 @@ const Wishlist = () => {
             <motion.div
               key={blog._id}
               initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
+              animate={{
+                opacity: 1,
+                y: 0,
+              }}
               transition={{ duration: 0.3 }}
               whileHover={{ scale: 1.02 }}
               onHoverStart={() => setHoveredCard(blog._id)}
