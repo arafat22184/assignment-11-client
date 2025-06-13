@@ -10,6 +10,7 @@ import PrivateRoute from "../Provider/PrivateRoute";
 import AddBlog from "../Pages/AddBlog";
 import FeaturedBlogs from "../Pages/FeaturedBlogs";
 import Wishlist from "../Pages/Wishlist";
+import UpdateBlog from "../Pages/UpdateBlog";
 
 const router = createBrowserRouter([
   {
@@ -62,6 +63,17 @@ const router = createBrowserRouter([
             <Wishlist></Wishlist>
           </PrivateRoute>
         ),
+      },
+      {
+        path: "/updateBlog/:id",
+        element: (
+          <PrivateRoute>
+            <UpdateBlog></UpdateBlog>
+          </PrivateRoute>
+        ),
+        loader: ({ params }) =>
+          fetch(`${import.meta.env.VITE_API_LINK}/blogs/${params.id}`),
+        hydrateFallbackElement: <LoadingSpinner></LoadingSpinner>,
       },
       {
         path: "featuredBlogs",

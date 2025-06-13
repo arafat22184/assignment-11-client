@@ -266,7 +266,10 @@ const BlogDetails = () => {
             {isLiked ? "Wishlisted" : "Wishlist"} ({likeCount})
           </button>
           {isAuthor && (
-            <button className="flex items-center gap-2 px-4 py-2 bg-slate-700 hover:bg-slate-600 text-white rounded-md transition-colors cursor-pointer">
+            <button
+              onClick={() => navigate(`/updateBlog/${_id}`)}
+              className="flex items-center gap-2 px-4 py-2 bg-slate-700 hover:bg-slate-600 text-white rounded-md transition-colors cursor-pointer"
+            >
               <FiEdit2 /> Edit Blog
             </button>
           )}
