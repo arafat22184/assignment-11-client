@@ -491,7 +491,7 @@ const BlogDetails = () => {
             <div className="flex items-center gap-1">
               {author.photo ? (
                 <img
-                  className="w-7 border border-blue-400 rounded-full"
+                  className="w-7 h-7 border border-blue-400 rounded-full"
                   src={author.photo}
                   alt={`${author.name} photo`}
                 />

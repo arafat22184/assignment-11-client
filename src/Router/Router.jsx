@@ -8,6 +8,7 @@ import LoadingSpinner from "../Components/LoadingSpinner";
 import DetailsBlog from "../Pages/DetailsBlog";
 import PrivateRoute from "../Provider/PrivateRoute";
 import AddBlog from "../Pages/AddBlog";
+import FeaturedBlogs from "../Pages/FeaturedBlogs";
 
 const router = createBrowserRouter([
   {
@@ -52,6 +53,10 @@ const router = createBrowserRouter([
             <AddBlog></AddBlog>
           </PrivateRoute>
         ),
+      },
+      {
+        path: "featuredBlogs",
+        Component: FeaturedBlogs,
       },
       {
         path: "/login",
