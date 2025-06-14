@@ -68,9 +68,6 @@ const router = createBrowserRouter([
             <UpdateBlog></UpdateBlog>
           </PrivateRoute>
         ),
-        loader: ({ params }) =>
-          fetch(`${import.meta.env.VITE_API_LINK}/blogs/${params.id}`),
-        hydrateFallbackElement: <LoadingSpinner></LoadingSpinner>,
       },
       {
         path: "featuredBlogs",

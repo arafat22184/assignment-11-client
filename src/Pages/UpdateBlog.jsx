@@ -1,6 +1,6 @@
 /* eslint-disable no-unused-vars */
-import React, { use, useState } from "react";
-import { useLoaderData, useNavigate } from "react-router";
+import { use, useEffect, useState } from "react";
+import { useNavigate, useParams } from "react-router";
 import { motion } from "framer-motion";
 import { FiFileText, FiTag, FiImage, FiUploadCloud } from "react-icons/fi";
 import {
@@ -11,15 +11,36 @@ import {
 } from "react-icons/md";
 import { AuthContext } from "../Provider/AuthProvider";
 import { toast } from "react-toastify";
-import axios from "axios";
+import useAxiosSecure from "../Hooks/useAxiosSecure";
 
 const UpdateBlog = () => {
-  const blog = useLoaderData();
   const { user } = use(AuthContext);
+  const axiosSecure = useAxiosSecure();
+  const { id } = useParams();
+  const [blog, setBlog] = useState({});
   const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
 
   const { title, image, shortDescription, category, content, tags, _id } = blog;
+  useEffect(() => {
+    axiosSecure
+      .get(`/blogs/${id}`)
+      .then((res) => {
+        setBlog(res.data);
+      })
+      .catch(() => {
+        toast.error("Something went wrong please try again", {
+          position: "top-right",
+          autoClose: 5000,
+          hideProgressBar: false,
+          closeOnClick: false,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+          theme: "colored",
+        });
+      });
+  }, [axiosSecure, id]);
 
   const categories = [
     "Technology",
@@ -56,12 +77,11 @@ const UpdateBlog = () => {
     };
 
     // Send Blog Data to DB
-    axios
+    axiosSecure
       .put(`${import.meta.env.VITE_API_LINK}/blogs/${_id}`, updateBlog)
       .then((res) => {
         if (res.data.modifiedCount) {
-          setLoading(false);
-          toast.success("Blog posted successfully!", {
+          toast.success("Blog updated successfully!", {
             position: "top-right",
             autoClose: 5000,
             hideProgressBar: false,
@@ -74,7 +94,6 @@ const UpdateBlog = () => {
           navigate(`/blog/${_id}`);
           window.scrollTo(0, 0);
         } else {
-          setLoading(false);
           toast.error("Update minimum one field then try again.", {
             position: "top-right",
             autoClose: 5000,
@@ -89,7 +108,6 @@ const UpdateBlog = () => {
       })
       .catch((error) => {
         if (error) {
-          setLoading(false);
           toast.error("Failed to update blog. Try again.", {
             position: "top-right",
             autoClose: 5000,
@@ -103,6 +121,9 @@ const UpdateBlog = () => {
           setLoading(false);
           window.scrollTo(0, 0);
         }
+      })
+      .finally(() => {
+        setLoading(false);
       });
   };
 
@@ -158,7 +179,7 @@ const UpdateBlog = () => {
             </label>
             <select
               name="category"
-              defaultValue={category}
+              value={category}
               required
               className="w-full px-4 py-2 bg-slate-800 border border-slate-700 rounded-md"
             >
@@ -180,7 +201,7 @@ const UpdateBlog = () => {
             <input
               name="tags"
               type="text"
-              defaultValue={tags}
+              defaultValue={Array.isArray(tags) ? tags.join(", ") : ""}
               className="w-full bg-slate-800 text-white border border-slate-700 rounded-md px-4 py-2 focus:ring-2 focus:ring-blue-500 outline-none"
               placeholder="JavaScript, Design, React"
             />
