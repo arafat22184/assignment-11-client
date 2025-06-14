@@ -8,9 +8,11 @@ import LoadingSpinner from "../Components/LoadingSpinner";
 import { AuthContext } from "../Provider/AuthProvider";
 import { toast } from "react-toastify";
 import { FiHeart } from "react-icons/fi";
+import useAxiosSecure from "../Hooks/useAxiosSecure";
 
 const Wishlist = () => {
   const navigate = useNavigate();
+  const axiosSecure = useAxiosSecure();
   const queryClient = useQueryClient();
   const { user, loading } = useContext(AuthContext);
   const [hoveredCard, setHoveredCard] = useState(null);
@@ -24,27 +26,26 @@ const Wishlist = () => {
     enabled: !!user?.uid,
     queryKey: ["wishlist", user?.uid],
     queryFn: async () => {
-      const res = await fetch(
-        `${import.meta.env.VITE_API_LINK}/wishlistedBlogs?userId=${user?.uid}`
-      );
-      if (!res.ok) throw new Error("Failed to fetch wishlist");
-      return res.json();
+      const res = await axiosSecure.get(`/wishlistedBlogs?userId=${user?.uid}`);
+      return res.data;
     },
   });
 
   const mutation = useMutation({
     mutationFn: async (blogId) => {
-      const res = await fetch(`${import.meta.env.VITE_API_LINK}/wishlists`, {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ userId: user?.uid, blogId }),
+      const res = await axiosSecure.post(`/wishlists`, {
+        userId: user?.uid,
+        blogId,
       });
-      const data = await res.json();
-      if (!data.success) throw new Error(data.message || "Failed to remove");
-      return data;
+
+      if (!res.data.success) {
+        throw new Error(res.data.message || "Failed to remove");
+      }
+
+      return res.data;
     },
     onSuccess: () => {
-      toast.success("Removed from wishlist", {
+      toast.error("Removed from wishlist", {
         position: "top-right",
         autoClose: 5000,
         hideProgressBar: false,
