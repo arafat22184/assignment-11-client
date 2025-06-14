@@ -13,9 +13,11 @@ import { MdEmail, MdOutlineCategory, MdPerson } from "react-icons/md";
 import { toast } from "react-toastify";
 import { useNavigate } from "react-router";
 import axios from "axios";
+import useAxiosSecure from "../Hooks/useAxiosSecure";
 
 const AddBlog = () => {
   const { user } = useContext(AuthContext);
+  const axiosSecure = useAxiosSecure();
   const navigate = useNavigate();
   const [loading, setLoading] = useState(false);
 
@@ -62,7 +64,7 @@ const AddBlog = () => {
     };
 
     // Send Blog Data to DB
-    axios
+    axiosSecure
       .post(`${import.meta.env.VITE_API_LINK}/blogs`, blogData)
       .then((res) => {
         if (res.data.insertedId) {
@@ -80,19 +82,18 @@ const AddBlog = () => {
           navigate("/");
         }
       })
-      .catch((error) => {
-        if (error) {
-          toast.error("Failed to post blog. Try again.", {
-            position: "top-right",
-            autoClose: 5000,
-            hideProgressBar: false,
-            closeOnClick: false,
-            pauseOnHover: true,
-            draggable: true,
-            progress: undefined,
-            theme: "colored",
-          });
-        }
+      .catch(() => {
+        setLoading(false);
+        toast.error("Failed to post blog. Try again.", {
+          position: "top-right",
+          autoClose: 5000,
+          hideProgressBar: false,
+          closeOnClick: false,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+          theme: "colored",
+        });
       });
   };
 
