@@ -8,15 +8,20 @@ import {
   FiMessageSquare,
 } from "react-icons/fi";
 import { BiCommentAdd, BiLeftArrow } from "react-icons/bi";
-import { useLoaderData, useNavigate } from "react-router";
+import { useNavigate, useParams } from "react-router";
 import { use, useEffect, useState } from "react";
 import { AuthContext } from "../Provider/AuthProvider";
 import { toast } from "react-toastify";
 import axios from "axios";
 import ReactMarkdown from "react-markdown";
+import useAxiosSecure from "../Hooks/useAxiosSecure";
+import LoadingSpinner from "../Components/LoadingSpinner";
 
-const BlogDetails = () => {
-  const { user } = use(AuthContext);
+const DetailsBlog = () => {
+  const { user, loading, setLoading } = use(AuthContext);
+  const { id } = useParams();
+  const axiosSecure = useAxiosSecure();
+  const [blog, setBlog] = useState({});
   const {
     category,
     author,
@@ -28,16 +33,39 @@ const BlogDetails = () => {
     tags,
     likes,
     _id,
-  } = useLoaderData();
+  } = blog;
 
   const [allComments, setAllComments] = useState(comments);
-
+  const [isLiked, setIsLiked] = useState(false);
+  const [likeCount, setLikeCount] = useState(0);
   const navigate = useNavigate();
   const isAuthor = user?.email === author?.email;
   const canComment = !isAuthor;
 
-  const [isLiked, setIsLiked] = useState(false);
-  const [likeCount, setLikeCount] = useState(likes?.length || 0);
+  useEffect(() => {
+    axiosSecure
+      .get(`/blogs/${id}`)
+      .then((res) => {
+        setBlog(res.data);
+      })
+      .catch((err) => {
+        if (err) {
+          toast.error("Something went wrong please try again", {
+            position: "top-right",
+            autoClose: 5000,
+            hideProgressBar: false,
+            closeOnClick: false,
+            pauseOnHover: true,
+            draggable: true,
+            progress: undefined,
+            theme: "colored",
+          });
+        }
+      })
+      .finally(() => {
+        setLoading(false);
+      });
+  }, [id, axiosSecure, setLoading]);
 
   useEffect(() => {
     if (user && likes?.length) {
@@ -174,6 +202,14 @@ const BlogDetails = () => {
       });
   };
 
+  if (loading) {
+    return <LoadingSpinner></LoadingSpinner>;
+  }
+
+  if (!blog) {
+    return <p>Blog not found</p>;
+  }
+
   return (
     <motion.div
       initial={{ opacity: 0 }}
@@ -196,16 +232,16 @@ const BlogDetails = () => {
           <h1 className="text-3xl md:text-4xl font-bold mb-4">{title}</h1>
           <div className="flex items-center gap-4 text-slate-400 text-sm">
             <div className="flex items-center gap-1">
-              {author.photo ? (
+              {author?.photo ? (
                 <img
                   className="w-7 h-7 border border-blue-400 rounded-full"
-                  src={author.photo}
-                  alt={`${author.name} photo`}
+                  src={author?.photo}
+                  alt={`${author?.name} photo`}
                 />
               ) : (
                 <FiUser className="text-blue-400" />
               )}
-              <span>{author.name}</span>
+              <span>{author?.name}</span>
             </div>
             <div className="flex items-center gap-1">
               <FiClock className="text-blue-400" />
@@ -231,7 +267,7 @@ const BlogDetails = () => {
         </motion.div>
 
         <article className="prose prose-invert max-w-none mb-12">
-          <ReactMarkdown>{content.replace(/\\n/g, "\n")}</ReactMarkdown>
+          <ReactMarkdown>{content?.replace(/\\n/g, "\n")}</ReactMarkdown>
         </article>
 
         {tags?.length > 0 && (
@@ -350,4 +386,4 @@ const BlogDetails = () => {
   );
 };
 
-export default BlogDetails;
+export default DetailsBlog;
