@@ -71,8 +71,7 @@ const BlogCard = ({ blog }) => {
             });
           }
         })
-        .catch((err) => {
-          console.log(err);
+        .catch(() => {
           toast.error("Something went wrong Please try again", {
             position: "top-right",
             autoClose: 5000,

@@ -8,16 +8,16 @@ import { MdOutlineKeyboardDoubleArrowRight } from "react-icons/md";
 
 const images = [
   "https://i.ibb.co/FkcWHYKG/Astronaut.jpg",
-  "https://i.ibb.co/4nVgYVbG/attractive-slim-woman-doing-sport-exercises-morning-sunrise-beach-sports-wear-thirsty-drinking-water.jpg",
-  "https://i.ibb.co/8DTrRwqh/back-view-island-outdoors-tree-standing.jpg",
-  "https://i.ibb.co/pjt1rT3R/business-woman-working.jpg",
-  "https://i.ibb.co/ch61tt71/deep-fried-fhicken-roll-dark-surface.jpg",
-  "https://i.ibb.co/prvqS0bZ/front-view-women-holding-paper-wrapped-sandwich.jpg",
-  "https://i.ibb.co/MxszTssN/man-cutting-vegetables-with-knife-looking-woman-holding-laptop-kitchen.jpg",
-  "https://i.ibb.co/VcbFgYsx/medium-shot-woman-practicing-selfcare.jpg",
-  "https://i.ibb.co/RtJwv5x/woman-digital-disconnecting-home-by-doing-yoga.jpg",
-  "https://i.ibb.co/39qpphgT/young-couple-together-walking-autumn-park.jpg",
-  "https://i.ibb.co/Y4BrfvMv/young-woman-doing-her-morning-routine.jpg",
+  "https://i.ibb.co/KxTw5Vvn/Attractive-Slim-Women.jpg",
+  "https://i.ibb.co/pBLBX38g/SeaView.jpg",
+  "https://i.ibb.co/cK6FVGcq/women-Writing.jpg",
+  "https://i.ibb.co/Fb0XZMRG/food.jpg",
+  "https://i.ibb.co/Z6CgZVNg/2-Women-Restaurant.jpg",
+  "https://i.ibb.co/G4Qc0dvD/couple-Kitchen.jpg",
+  "https://i.ibb.co/n838pWH8/practicing-selfcare.jpg",
+  "https://i.ibb.co/2Jpp2Tz/women-Meditation.jpg",
+  "https://i.ibb.co/HLqGvWmY/young-Couple.jpg",
+  "https://i.ibb.co/DZBrYYK/skinCare.jpg",
 ];
 
 const OurGallery = () => {
