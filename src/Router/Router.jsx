@@ -11,6 +11,7 @@ import AddBlog from "../Pages/AddBlog";
 import FeaturedBlogs from "../Pages/FeaturedBlogs";
 import Wishlist from "../Pages/Wishlist";
 import UpdateBlog from "../Pages/UpdateBlog";
+import ErrorPage from "../Pages/ErrorPage";
 
 const router = createBrowserRouter([
   {
@@ -82,6 +83,10 @@ const router = createBrowserRouter([
         Component: Register,
       },
     ],
+  },
+  {
+    path: "*",
+    element: <ErrorPage publicComponent={true} />,
   },
 ]);
 

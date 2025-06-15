@@ -15,6 +15,7 @@ import { toast } from "react-toastify";
 import ReactMarkdown from "react-markdown";
 import useAxiosSecure from "../Hooks/useAxiosSecure";
 import LoadingSpinner from "../Components/LoadingSpinner";
+import ErrorPage from "./ErrorPage";
 
 const DetailsBlog = () => {
   const { user, loading, setLoading } = useContext(AuthContext);
@@ -36,6 +37,7 @@ const DetailsBlog = () => {
   const [allComments, setAllComments] = useState([]);
   const [isLiked, setIsLiked] = useState(false);
   const [likeCount, setLikeCount] = useState(0);
+  const [error, setError] = useState("");
   const navigate = useNavigate();
   const isAuthor = user?.email === author?.email;
   const canComment = !isAuthor;
@@ -48,16 +50,7 @@ const DetailsBlog = () => {
       })
       .catch((err) => {
         if (err) {
-          toast.error("Something went wrong please try again", {
-            position: "top-right",
-            autoClose: 5000,
-            hideProgressBar: false,
-            closeOnClick: false,
-            pauseOnHover: true,
-            draggable: true,
-            progress: undefined,
-            theme: "colored",
-          });
+          setError(err);
         }
       })
       .finally(() => {
@@ -245,6 +238,10 @@ const DetailsBlog = () => {
 
   if (loading) {
     return <LoadingSpinner></LoadingSpinner>;
+  }
+
+  if (error) {
+    return <ErrorPage></ErrorPage>;
   }
 
   return (

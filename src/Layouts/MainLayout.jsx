@@ -8,7 +8,9 @@ import BackToTopButton from "../Components/BackToTopButton";
 const MainLayout = () => {
   return (
     <div className="bg-slate-950 min-h-screen">
-      <Navbar></Navbar>
+      <div className="border-b border-blue-400">
+        <Navbar></Navbar>
+      </div>
       <div className="min-h-[calc(100vh-408px)]">
         <Outlet></Outlet>
       </div>

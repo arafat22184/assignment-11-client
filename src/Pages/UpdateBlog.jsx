@@ -15,6 +15,7 @@ import { toast } from "react-toastify";
 import useAxiosSecure from "../Hooks/useAxiosSecure";
 import { BiLeftArrow } from "react-icons/bi";
 import Swal from "sweetalert2";
+import ErrorPage from "./ErrorPage";
 
 const UpdateBlog = () => {
   const { user } = use(AuthContext);
@@ -23,6 +24,7 @@ const UpdateBlog = () => {
   const [blog, setBlog] = useState({});
   const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
+  const [error, setError] = useState("");
 
   const { title, image, shortDescription, category, content, tags, _id } = blog;
   useEffect(() => {
@@ -31,17 +33,8 @@ const UpdateBlog = () => {
       .then((res) => {
         setBlog(res.data);
       })
-      .catch(() => {
-        toast.error("Something went wrong please try again", {
-          position: "top-right",
-          autoClose: 5000,
-          hideProgressBar: false,
-          closeOnClick: false,
-          pauseOnHover: true,
-          draggable: true,
-          progress: undefined,
-          theme: "colored",
-        });
+      .catch((err) => {
+        setError(err);
       });
   }, [axiosSecure, id]);
 
@@ -157,6 +150,10 @@ const UpdateBlog = () => {
       }
     });
   };
+
+  if (error) {
+    return <ErrorPage></ErrorPage>;
+  }
 
   return (
     <motion.div

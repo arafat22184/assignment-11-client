@@ -140,7 +140,7 @@ const Navbar = () => {
   );
 
   return (
-    <nav className="navbar p-4 xl:p-0 xl:max-w-11/12 mx-auto">
+    <nav className="navbar p-4 xl:py-2 xl:p-0 xl:max-w-11/12 mx-auto">
       <div className="navbar-start">
         <div className="dropdown space-x-3">
           <div tabIndex={0} role="button" className="text-white lg:hidden">

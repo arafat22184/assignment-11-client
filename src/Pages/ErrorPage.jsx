@@ -1,21 +1,21 @@
 import erroranimation from "../assets/Animations/404Error.json";
 import Lottie from "lottie-react";
 import Navbar from "../Components/Navbar";
-import { useRouteError } from "react-router";
+import { Link } from "react-router";
 
-const ErrorPage = () => {
-  const error = useRouteError();
-
+const ErrorPage = ({ publicComponent }) => {
   return (
     <div className="bg-slate-950 min-h-svh">
-      <div className="border-b border-primary">
-        <Navbar></Navbar>
-      </div>
+      {publicComponent && (
+        <div className="border-b border-blue-400">
+          <Navbar></Navbar>
+        </div>
+      )}
       <div className="max-w-7xl mx-auto">
         <div className="flex flex-col  justify-center items-center">
-          <div className="">
+          <div>
             <Lottie
-              style={{ maxWidth: "400px" }}
+              style={{ maxWidth: "450px" }}
               animationData={erroranimation}
             ></Lottie>
           </div>
@@ -30,7 +30,6 @@ const ErrorPage = () => {
           </Link>
         </div>
       </div>
-      {error.status} - {error.statusText || error.message}
     </div>
   );
 };
