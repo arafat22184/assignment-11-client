@@ -12,8 +12,10 @@ const useAxiosSecure = () => {
   const { user, logOut } = use(AuthContext);
   const navigate = useNavigate();
   axiosInstance.interceptors.request.use((config) => {
-    config.headers.authorization = `Bearer ${user.accessToken}`;
-    config.headers.email = user?.email;
+    if (user?.accessToken) {
+      config.headers.authorization = `Bearer ${user.accessToken}`;
+      config.headers.email = user.email;
+    }
     return config;
   });
 

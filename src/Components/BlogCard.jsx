@@ -71,7 +71,8 @@ const BlogCard = ({ blog }) => {
             });
           }
         })
-        .catch(() =>
+        .catch((err) => {
+          console.log(err);
           toast.error("Something went wrong Please try again", {
             position: "top-right",
             autoClose: 5000,
@@ -81,8 +82,8 @@ const BlogCard = ({ blog }) => {
             draggable: true,
             progress: undefined,
             theme: "colored",
-          })
-        );
+          });
+        });
     }
   };
 
