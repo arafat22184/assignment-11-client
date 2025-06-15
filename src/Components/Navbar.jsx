@@ -122,6 +122,7 @@ const Navbar = () => {
   const logOutBtn = (
     <>
       <img
+        referrerPolicy="no-referrer"
         className="w-14 h-14 rounded-full border-blue-500 border-4 "
         src={user?.photoURL}
         alt="user photo"
