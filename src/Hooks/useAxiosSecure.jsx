@@ -5,7 +5,7 @@ import { toast } from "react-toastify";
 import { useNavigate } from "react-router";
 
 const axiosInstance = axios.create({
-  baseURL: "http://localhost:3000",
+  baseURL: "https://assignment-11-server-lime-zeta.vercel.app",
 });
 
 const useAxiosSecure = () => {
