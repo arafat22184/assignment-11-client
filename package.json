@@ -29,6 +29,7 @@
     "react-simple-typewriter": "^5.0.1",
     "react-toastify": "^11.0.5",
     "react-tooltip": "^5.28.1",
+    "sweetalert2": "^11.22.0",
     "swiper": "^11.2.8",
     "tailwindcss": "^4.1.8",
     "typewriter-effect": "^2.22.0"

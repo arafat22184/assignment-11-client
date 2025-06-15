@@ -3,6 +3,7 @@ import { use, useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router";
 import { motion } from "framer-motion";
 import { FiFileText, FiTag, FiImage, FiUploadCloud } from "react-icons/fi";
+import { ImCancelCircle } from "react-icons/im";
 import {
   MdEmail,
   MdOutlineCategory,
@@ -12,6 +13,8 @@ import {
 import { AuthContext } from "../Provider/AuthProvider";
 import { toast } from "react-toastify";
 import useAxiosSecure from "../Hooks/useAxiosSecure";
+import { BiLeftArrow } from "react-icons/bi";
+import Swal from "sweetalert2";
 
 const UpdateBlog = () => {
   const { user } = use(AuthContext);
@@ -57,74 +60,102 @@ const UpdateBlog = () => {
     e.preventDefault();
     setLoading(true);
 
-    const form = e.target;
-    const title = form.title.value;
-    const image = form.image.value;
-    const category = form.category.value;
-    const tags = form.tags.value.split(",").map((tag) => tag.trim());
-    const content = form.content.value;
-    const wordCount = content.trim().split(/\s+/).length;
-    const shortDescription = form.shortDescription.value;
+    Swal.fire({
+      title: "Do you want to save the changes?",
+      showDenyButton: true,
+      showCancelButton: true,
+      confirmButtonText: "Save",
+      denyButtonText: `Don't save`,
+    }).then((result) => {
+      if (result.isConfirmed) {
+        const form = e.target;
+        const title = form.title.value;
+        const image = form.image.value;
+        const category = form.category.value;
+        const tags = form.tags.value.split(",").map((tag) => tag.trim());
+        const content = form.content.value;
+        const wordCount = content.trim().split(/\s+/).length;
+        const shortDescription = form.shortDescription.value;
 
-    const updateBlog = {
-      title,
-      image,
-      category,
-      tags,
-      shortDescription,
-      content,
-      wordCount,
-    };
+        const updateBlog = {
+          title,
+          image,
+          category,
+          tags,
+          shortDescription,
+          content,
+          wordCount,
+        };
 
-    // Send Blog Data to DB
-    axiosSecure
-      .put(`${import.meta.env.VITE_API_LINK}/blogs/${_id}`, updateBlog)
-      .then((res) => {
-        if (res.data.modifiedCount) {
-          toast.success("Blog updated successfully!", {
-            position: "top-right",
-            autoClose: 5000,
-            hideProgressBar: false,
-            closeOnClick: false,
-            pauseOnHover: true,
-            draggable: true,
-            progress: undefined,
-            theme: "colored",
+        // Send Blog Data to DB
+        axiosSecure
+          .put(`${import.meta.env.VITE_API_LINK}/blogs/${_id}`, updateBlog)
+          .then((res) => {
+            if (res.data.modifiedCount) {
+              toast.success("Blog updated successfully!", {
+                position: "top-right",
+                autoClose: 5000,
+                hideProgressBar: false,
+                closeOnClick: false,
+                pauseOnHover: true,
+                draggable: true,
+                progress: undefined,
+                theme: "colored",
+              });
+              navigate(`/blog/${_id}`);
+              window.scrollTo(0, 0);
+            } else {
+              toast.error("Update minimum one field then try again.", {
+                position: "top-right",
+                autoClose: 5000,
+                hideProgressBar: false,
+                closeOnClick: false,
+                pauseOnHover: true,
+                draggable: true,
+                progress: undefined,
+                theme: "colored",
+              });
+            }
+          })
+          .catch((error) => {
+            if (error) {
+              toast.error("Failed to update blog. Try again.", {
+                position: "top-right",
+                autoClose: 5000,
+                hideProgressBar: false,
+                closeOnClick: false,
+                pauseOnHover: true,
+                draggable: true,
+                progress: undefined,
+                theme: "colored",
+              });
+              setLoading(false);
+              window.scrollTo(0, 0);
+            }
+          })
+          .finally(() => {
+            setLoading(false);
           });
-          navigate(`/blog/${_id}`);
-          window.scrollTo(0, 0);
-        } else {
-          toast.error("Update minimum one field then try again.", {
-            position: "top-right",
-            autoClose: 5000,
-            hideProgressBar: false,
-            closeOnClick: false,
-            pauseOnHover: true,
-            draggable: true,
-            progress: undefined,
-            theme: "colored",
-          });
-        }
-      })
-      .catch((error) => {
-        if (error) {
-          toast.error("Failed to update blog. Try again.", {
-            position: "top-right",
-            autoClose: 5000,
-            hideProgressBar: false,
-            closeOnClick: false,
-            pauseOnHover: true,
-            draggable: true,
-            progress: undefined,
-            theme: "colored",
-          });
-          setLoading(false);
-          window.scrollTo(0, 0);
-        }
-      })
-      .finally(() => {
+      } else if (result.isDenied) {
+        Swal.fire("Changes are not saved", "", "info");
+        window.history.back();
+      } else {
         setLoading(false);
-      });
+      }
+    });
+  };
+
+  const handleCancelBtn = () => {
+    Swal.fire({
+      title: "Do you want to discard the changes?",
+      showCancelButton: true,
+      confirmButtonText: "Yes",
+    }).then((result) => {
+      if (result.isConfirmed) {
+        Swal.fire("Changes are not saved", "", "info");
+        window.history.back();
+      }
+    });
   };
 
   return (
@@ -134,6 +165,14 @@ const UpdateBlog = () => {
       transition={{ duration: 2 }}
       className="min-h-screen bg-slate-950 text-slate-100 px-4 py-12"
     >
+      <div className="max-w-4xl mx-auto">
+        <button
+          className="flex items-center gap-2 text-blue-300 hover:text-blue-400 mb-6 transition-colors cursor-pointer"
+          onClick={() => window.history.back()}
+        >
+          <BiLeftArrow /> Back to Blog Details
+        </button>
+      </div>
       <div className="max-w-4xl mx-auto border border-slate-800 rounded-xl p-8 shadow-lg bg-slate-900">
         <h2 className="flex items-center justify-center gap-2 text-3xl md:text-4xl font-bold text-white mb-4 dmSerif">
           <MdOutlineUpdate />
@@ -264,16 +303,44 @@ const UpdateBlog = () => {
             </div>
           </div>
 
-          {/* Submit Button */}
-          <motion.button
-            type="submit"
-            whileTap={{ scale: 0.95 }}
-            disabled={loading}
-            className="flex w-full items-center justify-center gap-2 py-3 bg-blue-500 hover:bg-blue-600 text-white font-semibold rounded-md transition-colors disabled:opacity-50 cursor-pointer"
-          >
-            <FiUploadCloud />
-            {loading ? "Updating..." : "Update Blog"}
-          </motion.button>
+          <div className="flex flex-col-reverse md:flex-row items-center gap-4 pt-6 border-t border-slate-700 mt-8">
+            {/* Discard Changes Button */}
+            <motion.button
+              type="button"
+              whileTap={{ scale: 0.95 }}
+              disabled={loading}
+              onClick={handleCancelBtn}
+              className="w-full md:w-1/2 flex items-center justify-center gap-2 py-3 bg-red-500 hover:bg-red-600 text-white font-semibold rounded-md transition-all duration-200 disabled:opacity-50 cursor-pointer"
+            >
+              <ImCancelCircle />
+              Discard Changes
+            </motion.button>
+
+            {/* Divider */}
+            <div className="hidden md:block h-6 border-l border-slate-500"></div>
+            <div className="md:hidden w-full border-t border-slate-600 relative">
+              <span className="absolute left-1/2 -translate-x-1/2 -top-3 px-2 bg-slate-900 text-xs text-gray-400">
+                OR
+              </span>
+            </div>
+
+            {/* Submit Button */}
+            <motion.button
+              type="submit"
+              whileTap={{ scale: 0.95 }}
+              disabled={loading}
+              className="w-full md:w-1/2 flex items-center justify-center gap-2 py-3 bg-blue-500 hover:bg-blue-600 text-white font-semibold rounded-md transition-all duration-200 disabled:opacity-50 cursor-pointer"
+            >
+              {loading ? (
+                <span className="animate-spin">
+                  <FiUploadCloud />
+                </span>
+              ) : (
+                <FiUploadCloud />
+              )}
+              <span>{loading ? "Updating..." : "Update Blog"}</span>
+            </motion.button>
+          </div>
         </form>
       </div>
     </motion.div>

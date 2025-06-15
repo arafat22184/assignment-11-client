@@ -256,10 +256,10 @@ const DetailsBlog = () => {
     >
       <div className="max-w-4xl mx-auto">
         <button
-          className="flex items-center gap-2 text-blue-400 hover:text-blue-300 mb-6 transition-colors cursor-pointer"
+          className="flex items-center gap-2 text-blue-300 hover:text-blue-400 mb-6 transition-colors cursor-pointer"
           onClick={() => window.history.back()}
         >
-          <BiLeftArrow /> Back to blogs
+          <BiLeftArrow /> Back to Blogs
         </button>
 
         <div className="mb-8">
