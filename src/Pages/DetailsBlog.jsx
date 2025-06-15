@@ -400,7 +400,7 @@ const DetailsBlog = () => {
                     <div>
                       <h4 className="font-medium">{comment.userName}</h4>
                       <p className="text-xs text-slate-400">
-                        {new Date(comment.postedAt).toLocaleDateString(
+                        {new Date(comment?.postedAt).toLocaleDateString(
                           "en-US",
                           {
                             year: "numeric",
