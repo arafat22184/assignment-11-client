@@ -9,16 +9,15 @@ import {
 } from "react-icons/fi";
 import { BiCommentAdd, BiLeftArrow } from "react-icons/bi";
 import { useNavigate, useParams } from "react-router";
-import { use, useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import { AuthContext } from "../Provider/AuthProvider";
 import { toast } from "react-toastify";
-import axios from "axios";
 import ReactMarkdown from "react-markdown";
 import useAxiosSecure from "../Hooks/useAxiosSecure";
 import LoadingSpinner from "../Components/LoadingSpinner";
 
 const DetailsBlog = () => {
-  const { user, loading, setLoading } = use(AuthContext);
+  const { user, loading, setLoading } = useContext(AuthContext);
   const { id } = useParams();
   const axiosSecure = useAxiosSecure();
   const [blog, setBlog] = useState({});
@@ -26,7 +25,6 @@ const DetailsBlog = () => {
     category,
     author,
     createdAt,
-    comments,
     title,
     content,
     image,
@@ -35,7 +33,7 @@ const DetailsBlog = () => {
     _id,
   } = blog;
 
-  const [allComments, setAllComments] = useState(comments);
+  const [allComments, setAllComments] = useState([]);
   const [isLiked, setIsLiked] = useState(false);
   const [likeCount, setLikeCount] = useState(0);
   const navigate = useNavigate();
@@ -68,6 +66,39 @@ const DetailsBlog = () => {
   }, [id, axiosSecure, setLoading]);
 
   useEffect(() => {
+    axiosSecure
+      .get(`/comments/${id}`)
+      .then((res) => {
+        const { success, data } = res.data;
+
+        if (!success) {
+          toast.error("Failed to load comments. Please try again later.", {
+            position: "top-right",
+            autoClose: 5000,
+            hideProgressBar: false,
+            closeOnClick: true,
+            pauseOnHover: true,
+            draggable: true,
+            theme: "colored",
+          });
+        } else {
+          setAllComments(data || []);
+        }
+      })
+      .catch(() => {
+        toast.error("An error occurred while loading comments.", {
+          position: "top-right",
+          autoClose: 5000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          theme: "colored",
+        });
+      });
+  }, [id, axiosSecure]);
+
+  useEffect(() => {
     if (user && likes?.length) {
       setIsLiked(likes.includes(user.uid));
     }
@@ -79,8 +110,6 @@ const DetailsBlog = () => {
     month: "long",
     day: "numeric",
   });
-
-  const todayDate = new Date().toISOString();
 
   // Data Added to Wishlist
   const handleWishlist = () => {
@@ -102,8 +131,8 @@ const DetailsBlog = () => {
     const userId = user.uid;
     const wishListData = { userId, blogId: _id };
 
-    axios
-      .post(`${import.meta.env.VITE_API_LINK}/wishlists`, wishListData)
+    axiosSecure
+      .post(`/wishlists`, wishListData)
       .then((data) => {
         if (data?.data?.added) {
           setIsLiked(true);
@@ -154,11 +183,23 @@ const DetailsBlog = () => {
     const text = e.target.comment.value;
     const userImage = user.photoURL;
     const userName = user.displayName;
-    const postedAt = todayDate;
-    const commentData = { text, userImage, userName, postedAt };
+    const commentData = { text, userImage, userName, blogId: _id };
+    if (!text.trim()) {
+      toast.warn("Comment cannot be empty", {
+        position: "top-right",
+        autoClose: 5000,
+        hideProgressBar: false,
+        closeOnClick: false,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "colored",
+      });
+      return;
+    }
 
-    axios
-      .patch(`${import.meta.env.VITE_API_LINK}/blogs/${_id}`, commentData)
+    axiosSecure
+      .post(`comments`, commentData)
       .then((res) => {
         setAllComments([...allComments, commentData]);
         if (res.data.success) {
@@ -204,10 +245,6 @@ const DetailsBlog = () => {
 
   if (loading) {
     return <LoadingSpinner></LoadingSpinner>;
-  }
-
-  if (!blog) {
-    return <p>Blog not found</p>;
   }
 
   return (
@@ -341,15 +378,18 @@ const DetailsBlog = () => {
           <div className="space-y-6">
             {allComments?.length > 0 ? (
               allComments.map((comment, index) => (
-                <div
+                <motion.div
                   key={index}
+                  initial={{ opacity: 0, y: 20 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ duration: 0.5, delay: index * 0.05 }}
                   className="bg-slate-800/50 p-4 rounded-lg border border-slate-700"
                 >
                   <div className="flex items-center gap-3 mb-3">
                     <div className="w-8 h-8 rounded-full bg-blue-400/10 flex items-center justify-center text-blue-400">
                       {comment.userImage ? (
                         <img
-                          className="w-full rounded-full"
+                          className="w-full h-full rounded-full"
                           src={comment.userImage}
                           alt={`${comment?.userName} photo`}
                         />
@@ -372,12 +412,17 @@ const DetailsBlog = () => {
                     </div>
                   </div>
                   <p className="text-slate-300 pl-11">{comment.text}</p>
-                </div>
+                </motion.div>
               ))
             ) : (
-              <p className="text-slate-400 text-center py-6">
+              <motion.p
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                transition={{ duration: 0.5, delay: 0.4 }}
+                className="text-slate-400 text-center py-6"
+              >
                 No comments yet. Be the first to comment!
-              </p>
+              </motion.p>
             )}
           </div>
         </div>

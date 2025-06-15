@@ -5,12 +5,13 @@ import { use, useEffect, useState } from "react";
 import { AuthContext } from "../Provider/AuthProvider";
 import { toast } from "react-toastify";
 import { useNavigate } from "react-router";
-import axios from "axios";
 import { FaEye } from "react-icons/fa";
+import useAxiosSecure from "../Hooks/useAxiosSecure";
 
 const BlogCard = ({ blog }) => {
   const { image, title, category, shortDescription, _id } = blog;
   const { user } = use(AuthContext);
+  const axiosSecure = useAxiosSecure();
   const [isHovered, setIsHovered] = useState(false);
   const navigate = useNavigate();
   const [isLiked, setIsLiked] = useState(false);
@@ -40,8 +41,8 @@ const BlogCard = ({ blog }) => {
       const userId = user.uid;
       const wishListData = { userId, blogId: _id };
 
-      axios
-        .post(`${import.meta.env.VITE_API_LINK}/wishlists`, wishListData)
+      axiosSecure
+        .post(`/wishlists`, wishListData)
         .then((data) => {
           if (data?.data?.added) {
             setIsLiked(true);
@@ -70,19 +71,17 @@ const BlogCard = ({ blog }) => {
             });
           }
         })
-        .catch(
-          (error) =>
-            error &&
-            toast.error("Something went wrong Please try again", {
-              position: "top-right",
-              autoClose: 5000,
-              hideProgressBar: false,
-              closeOnClick: false,
-              pauseOnHover: true,
-              draggable: true,
-              progress: undefined,
-              theme: "colored",
-            })
+        .catch(() =>
+          toast.error("Something went wrong Please try again", {
+            position: "top-right",
+            autoClose: 5000,
+            hideProgressBar: false,
+            closeOnClick: false,
+            pauseOnHover: true,
+            draggable: true,
+            progress: undefined,
+            theme: "colored",
+          })
         );
     }
   };

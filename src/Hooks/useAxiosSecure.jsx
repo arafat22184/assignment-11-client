@@ -1,17 +1,19 @@
 import axios from "axios";
 import { use } from "react";
 import { AuthContext } from "../Provider/AuthProvider";
+import { toast } from "react-toastify";
+import { useNavigate } from "react-router";
 
 const axiosInstance = axios.create({
   baseURL: "http://localhost:3000",
 });
 
 const useAxiosSecure = () => {
-  const { user, signOutUser } = use(AuthContext);
-
+  const { user, logOut } = use(AuthContext);
+  const navigate = useNavigate();
   axiosInstance.interceptors.request.use((config) => {
     config.headers.authorization = `Bearer ${user.accessToken}`;
-    config.headers.email = user.email;
+    config.headers.email = user?.email;
     return config;
   });
 
@@ -22,9 +24,19 @@ const useAxiosSecure = () => {
     },
     (error) => {
       if (error.status === 401 || error.status === 403) {
-        signOutUser()
+        logOut();
+        navigate("/login")
           .then(() => {
-            alert("sign in again");
+            toast.error("Please sign in again", {
+              position: "top-right",
+              autoClose: 5000,
+              hideProgressBar: false,
+              closeOnClick: false,
+              pauseOnHover: true,
+              draggable: true,
+              progress: undefined,
+              theme: "colored",
+            });
           })
           .catch((err) => {
             if (err) {

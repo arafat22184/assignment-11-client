@@ -16,6 +16,7 @@ const Wishlist = () => {
   const queryClient = useQueryClient();
   const { user, loading } = useContext(AuthContext);
   const [hoveredCard, setHoveredCard] = useState(null);
+  console.log(user.uid);
 
   const {
     data: wishlist = [],
