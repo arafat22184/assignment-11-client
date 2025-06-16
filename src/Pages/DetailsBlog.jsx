@@ -18,111 +18,68 @@ import LoadingSpinner from "../Components/LoadingSpinner";
 import ErrorPage from "./ErrorPage";
 
 const DetailsBlog = () => {
-  const { user, loading, setLoading } = useContext(AuthContext);
+  const { user } = useContext(AuthContext);
   const { id } = useParams();
+  const navigate = useNavigate();
   const axiosSecure = useAxiosSecure();
-  const [blog, setBlog] = useState({});
-  const {
-    category,
-    author,
-    createdAt,
-    title,
-    content,
-    image,
-    tags,
-    likes,
-    _id,
-  } = blog;
 
+  const [blog, setBlog] = useState({});
   const [allComments, setAllComments] = useState([]);
+  const [loadingBlog, setLoadingBlog] = useState(true);
+  const [loadingComments, setLoadingComments] = useState(true);
+  const [error, setError] = useState("");
   const [isLiked, setIsLiked] = useState(false);
   const [likeCount, setLikeCount] = useState(0);
-  const [error, setError] = useState("");
-  const navigate = useNavigate();
-  const isAuthor = user?.email === author?.email;
+
+  const isAuthor = user?.email === blog?.author?.email;
   const canComment = !isAuthor;
 
+  // Load blog
   useEffect(() => {
+    setLoadingBlog(true);
     axiosSecure
       .get(`/blogs/${id}`)
-      .then((res) => {
-        setBlog(res.data);
-      })
-      .catch((err) => {
-        if (err) {
-          setError(err);
-        }
-      })
-      .finally(() => {
-        setLoading(false);
-      });
-  }, [id, axiosSecure, setLoading]);
+      .then((res) => setBlog(res.data))
+      .catch((err) => setError(err))
+      .finally(() => setLoadingBlog(false));
+  }, [id, axiosSecure]);
 
+  // Load comments
   useEffect(() => {
+    setLoadingComments(true);
     axiosSecure
       .get(`/comments/${id}`)
       .then((res) => {
         const { success, data } = res.data;
-
-        if (!success) {
-          toast.error("Failed to load comments. Please try again later.", {
-            position: "top-right",
-            autoClose: 5000,
-            hideProgressBar: false,
-            closeOnClick: true,
-            pauseOnHover: true,
-            draggable: true,
-            theme: "colored",
-          });
-        } else {
-          setAllComments(data || []);
-        }
+        if (success) setAllComments(data || []);
+        else toast.error("Failed to load comments.");
       })
-      .catch(() => {
-        toast.error("An error occurred while loading comments.", {
-          position: "top-right",
-          autoClose: 5000,
-          hideProgressBar: false,
-          closeOnClick: true,
-          pauseOnHover: true,
-          draggable: true,
-          theme: "colored",
-        });
-      });
+      .catch(() => toast.error("Error loading comments."))
+      .finally(() => setLoadingComments(false));
   }, [id, axiosSecure]);
 
+  // Likes
   useEffect(() => {
-    if (user && likes?.length) {
-      setIsLiked(likes.includes(user.uid));
+    if (user && blog?.likes?.length) {
+      setIsLiked(blog.likes.includes(user.uid));
     }
-    setLikeCount(likes?.length);
-  }, [user, likes]);
+    setLikeCount(blog?.likes?.length || 0);
+  }, [user, blog]);
 
-  const formattedDate = new Date(createdAt).toLocaleDateString("en-US", {
+  const formattedDate = new Date(blog.createdAt).toLocaleDateString("en-US", {
     year: "numeric",
     month: "long",
     day: "numeric",
   });
 
-  // Data Added to Wishlist
   const handleWishlist = () => {
     if (!user?.email) {
-      navigate("/login");
-      toast.error("Please Login First", {
-        position: "top-right",
-        autoClose: 5000,
-        hideProgressBar: false,
-        closeOnClick: false,
-        pauseOnHover: true,
-        draggable: true,
-        progress: undefined,
-        theme: "colored",
-      });
+      navigate("/login", { state: location.pathname });
+      toast.error("Please Login First");
       return;
     }
 
-    const userId = user.uid;
-    const wishListData = { userId, blogId: _id };
+    const wishListData = { userId: user.uid, blogId: blog._id };
 
     axiosSecure
       .post(`/wishlists`, wishListData)
@@ -130,119 +87,51 @@ const DetailsBlog = () => {
         if (data?.data?.added) {
           setIsLiked(true);
           setLikeCount((prev) => prev + 1);
-          toast.success("Blog added to wishlist", {
-            position: "top-right",
-            autoClose: 5000,
-            hideProgressBar: false,
-            closeOnClick: false,
-            pauseOnHover: true,
-            draggable: true,
-            progress: undefined,
-            theme: "colored",
-          });
-        }
-        if (data?.data?.removed) {
+          toast.success("Blog added to wishlist");
+        } else if (data?.data?.removed) {
           setIsLiked(false);
           setLikeCount((prev) => prev - 1);
-          toast.error("Blog removed from wishlist", {
-            position: "top-right",
-            autoClose: 5000,
-            hideProgressBar: false,
-            closeOnClick: false,
-            pauseOnHover: true,
-            draggable: true,
-            progress: undefined,
-            theme: "colored",
-          });
+          toast.error("Blog removed from wishlist");
         }
       })
-      .catch(() => {
-        toast.error("Oops! Something went wrong. Please try again later.", {
-          position: "top-right",
-          autoClose: 5000,
-          hideProgressBar: false,
-          closeOnClick: false,
-          pauseOnHover: true,
-          draggable: true,
-          progress: undefined,
-          theme: "colored",
-        });
-      });
+      .catch(() => toast.error("Oops! Something went wrong."));
   };
 
-  // CommentPost
   const handleComment = (e) => {
     e.preventDefault();
-    const text = e.target.comment.value;
-    const userImage = user.photoURL;
-    const userName = user.displayName;
-    const commentData = { text, userImage, userName, blogId: _id };
-    if (!text.trim()) {
-      toast.warn("Comment cannot be empty", {
-        position: "top-right",
-        autoClose: 5000,
-        hideProgressBar: false,
-        closeOnClick: false,
-        pauseOnHover: true,
-        draggable: true,
-        progress: undefined,
-        theme: "colored",
-      });
+    const text = e.target.comment.value.trim();
+    if (!text) {
+      toast.warn("Comment cannot be empty");
       return;
     }
+
+    const commentData = {
+      text,
+      userImage: user.photoURL,
+      userName: user.displayName,
+      blogId: blog._id,
+    };
 
     axiosSecure
       .post(`comments`, commentData)
       .then((res) => {
-        setAllComments([...allComments, commentData]);
         if (res.data.success) {
-          toast.success("Comment posted successfully", {
-            position: "top-right",
-            autoClose: 5000,
-            hideProgressBar: false,
-            closeOnClick: false,
-            pauseOnHover: true,
-            draggable: true,
-            progress: undefined,
-            theme: "colored",
-          });
+          setAllComments((prev) => [...prev, commentData]);
+          toast.success("Comment posted successfully");
           e.target.reset();
         } else {
-          toast.error("Oops! Failed to post comment", {
-            position: "top-right",
-            autoClose: 5000,
-            hideProgressBar: false,
-            closeOnClick: false,
-            pauseOnHover: true,
-            draggable: true,
-            progress: undefined,
-            theme: "colored",
-          });
+          toast.error("Failed to post comment");
         }
       })
-      .catch((error) => {
-        if (error) {
-          toast.error("Oops! Error posting comment", {
-            position: "top-right",
-            autoClose: 5000,
-            hideProgressBar: false,
-            closeOnClick: false,
-            pauseOnHover: true,
-            draggable: true,
-            progress: undefined,
-            theme: "colored",
-          });
-        }
-      });
+      .catch(() => toast.error("Error posting comment"));
   };
 
-  if (loading) {
-    return <LoadingSpinner></LoadingSpinner>;
-  }
+  // Final loading check
+  if (loadingBlog || loadingComments) return <LoadingSpinner />;
+  if (error) return <ErrorPage />;
 
-  if (error) {
-    return <ErrorPage></ErrorPage>;
-  }
+  const { category, author, createdAt, title, content, image, tags, _id } =
+    blog;
 
   return (
     <motion.div
@@ -253,7 +142,7 @@ const DetailsBlog = () => {
     >
       <div className="max-w-4xl mx-auto">
         <button
-          className="flex items-center gap-2 text-blue-300 hover:text-blue-400 mb-6 transition-colors cursor-pointer"
+          className="flex items-center gap-2 text-blue-300 hover:text-blue-400 mb-6"
           onClick={() => window.history.back()}
         >
           <BiLeftArrow /> Back to Blogs
@@ -269,8 +158,8 @@ const DetailsBlog = () => {
               {author?.photo ? (
                 <img
                   className="w-7 h-7 border border-blue-400 rounded-full"
-                  src={author?.photo}
-                  alt={`${author?.name} photo`}
+                  src={author.photo}
+                  alt={`${author.name} photo`}
                 />
               ) : (
                 <FiUser className="text-blue-400" />
@@ -330,15 +219,14 @@ const DetailsBlog = () => {
               className={`h-5 w-5 ${
                 isLiked ? "text-white fill-white" : "text-white"
               }`}
-              animate={{ scale: isLiked ? [1, 1.2, 1] : 1 }}
-              transition={{ duration: 0.3 }}
             />
             {isLiked ? "Wishlisted" : "Wishlist"} ({likeCount})
           </button>
+
           {isAuthor && (
             <button
               onClick={() => navigate(`/updateBlog/${_id}`)}
-              className="flex items-center gap-2 px-4 py-2 bg-slate-700 hover:bg-slate-600 text-white rounded-md transition-colors cursor-pointer"
+              className="flex items-center gap-2 px-4 py-2 bg-slate-700 hover:bg-slate-600 text-white rounded-md"
             >
               <FiEdit2 /> Edit Blog
             </button>
@@ -355,13 +243,13 @@ const DetailsBlog = () => {
             <form onSubmit={handleComment} className="mb-8">
               <textarea
                 name="comment"
-                className="w-full px-4 py-3 bg-slate-800 border border-slate-700 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-400 text-white placeholder-slate-500"
+                className="w-full px-4 py-3 bg-slate-800 border border-slate-700 rounded-md text-white"
                 rows="4"
                 placeholder="Share your thoughts..."
               />
               <button
                 type="submit"
-                className="mt-3 px-6 py-2 bg-blue-500 hover:bg-blue-600 text-white rounded-md transition-colors flex items-center justify-center gap-2 cursor-pointer"
+                className="mt-3 px-6 py-2 bg-blue-500 hover:bg-blue-600 text-white rounded-md flex items-center gap-2"
               >
                 Post Comment <BiCommentAdd size={20} />
               </button>
@@ -373,7 +261,7 @@ const DetailsBlog = () => {
           )}
 
           <div className="space-y-6">
-            {allComments?.length > 0 ? (
+            {allComments.length > 0 ? (
               allComments.map((comment, index) => (
                 <motion.div
                   key={index}
@@ -388,7 +276,7 @@ const DetailsBlog = () => {
                         <img
                           className="w-full h-full rounded-full"
                           src={comment.userImage}
-                          alt={`${comment?.userName} photo`}
+                          alt={comment?.userName}
                         />
                       ) : (
                         <FiUser />
