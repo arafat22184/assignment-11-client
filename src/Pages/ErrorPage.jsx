@@ -2,6 +2,7 @@ import erroranimation from "../assets/Animations/404Error.json";
 import Lottie from "lottie-react";
 import Navbar from "../Components/Navbar";
 import { Link } from "react-router";
+import { FaArrowLeft } from "react-icons/fa";
 
 const ErrorPage = ({ publicComponent }) => {
   return (
@@ -12,7 +13,7 @@ const ErrorPage = ({ publicComponent }) => {
         </div>
       )}
       <div className="max-w-7xl mx-auto">
-        <div className="flex flex-col  justify-center items-center">
+        <div className="flex flex-col justify-center items-center">
           <div>
             <Lottie
               style={{ maxWidth: "450px" }}
@@ -23,10 +24,10 @@ const ErrorPage = ({ publicComponent }) => {
             Oops! The page you're looking for doesn't exist.
           </p>
           <Link
-            to={"/"}
-            className="bg-indigo-600 hover:bg-indigo-700 px-6 py-3 text-white font-bold rounded-xl"
+            to="/"
+            className="inline-flex items-center gap-2 px-5 py-2 bg-blue-500 hover:bg-blue-600 text-white rounded-full transition"
           >
-            Go Back Home
+            <FaArrowLeft /> Back to Home
           </Link>
         </div>
       </div>
