@@ -6,6 +6,7 @@ import BlogCard from "../Components/BlogCard";
 import { useLoaderData } from "react-router";
 import debounce from "lodash.debounce";
 import NoBlogs from "../Components/NoBlogs";
+import LoadingSpinner from "../Components/LoadingSpinner";
 
 const AllBlogs = () => {
   const initialBlogs = useLoaderData();
@@ -14,6 +15,7 @@ const AllBlogs = () => {
   const [categories, setCategories] = useState([]);
   const [selectedCategory, setSelectedCategory] = useState("All");
   const [searchText, setSearchText] = useState("");
+  const [loading, setLoading] = useState(false);
 
   // Extract unique categories from blogs
   useEffect(() => {
@@ -43,6 +45,7 @@ const AllBlogs = () => {
       return;
     }
 
+    setLoading(true);
     try {
       const res = await fetch(
         `${import.meta.env.VITE_API_LINK}/blogs?search=${search}`
@@ -52,6 +55,8 @@ const AllBlogs = () => {
     } catch (error) {
       console.error("Search error:", error);
       setBlogs(initialBlogs);
+    } finally {
+      setLoading(false);
     }
   };
 
@@ -63,6 +68,7 @@ const AllBlogs = () => {
         return;
       }
 
+      setLoading(true);
       try {
         const res = await fetch(
           `${import.meta.env.VITE_API_LINK}/blogs?search=${value.trim()}`
@@ -72,6 +78,8 @@ const AllBlogs = () => {
       } catch (error) {
         console.error("Live search error:", error);
         setBlogs(initialBlogs);
+      } finally {
+        setLoading(false);
       }
     }, 500)
   );
@@ -81,6 +89,10 @@ const AllBlogs = () => {
     setSearchText(value);
     debounceRef.current(value);
   };
+
+  if (loading) {
+    return <LoadingSpinner></LoadingSpinner>;
+  }
 
   return (
     <section className="bg-slate-950 min-h-screen py-8 px-4 lg:px-6">
