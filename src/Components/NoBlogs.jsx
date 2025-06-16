@@ -4,11 +4,11 @@ import { RiResetRightFill } from "react-icons/ri";
 
 const NoBlogs = ({ setSearchText, setBlogs, initialBlogs }) => {
   return (
-    <div className="flex flex-col justify-center items-center gap-6 py-12 px-4">
+    <div className="flex flex-col justify-center items-center gap-6">
       <Lottie
         animationData={noBlogs}
         loop
-        style={{ maxWidth: "400px", width: "100%" }}
+        style={{ maxWidth: "350px", width: "100%" }}
       />
       <h2 className="text-3xl font-semibold text-red-400 text-center">
         Oops! No blogs matched your search.

@@ -11,6 +11,7 @@ const Login = () => {
   const { signInUser, setLocation, googleLogIn } = useContext(AuthContext);
   const location = useLocation();
   const navigate = useNavigate();
+  console.log(location);
 
   useEffect(() => {
     setLocation(location.state);

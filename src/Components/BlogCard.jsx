@@ -4,7 +4,7 @@ import { FiHeart } from "react-icons/fi";
 import { use, useEffect, useState } from "react";
 import { AuthContext } from "../Provider/AuthProvider";
 import { toast } from "react-toastify";
-import { useNavigate } from "react-router";
+import { Navigate, useLocation, useNavigate } from "react-router";
 import { FaEye } from "react-icons/fa";
 import useAxiosSecure from "../Hooks/useAxiosSecure";
 
@@ -15,6 +15,7 @@ const BlogCard = ({ blog }) => {
   const [isHovered, setIsHovered] = useState(false);
   const navigate = useNavigate();
   const [isLiked, setIsLiked] = useState(false);
+  const { pathname } = useLocation();
 
   // For Rerendering
   useEffect(() => {
@@ -25,7 +26,7 @@ const BlogCard = ({ blog }) => {
 
   const handleWishlist = () => {
     if (!user && !user?.email) {
-      navigate("/login");
+      navigate("/login", { state: pathname });
       toast.error("Please Login First", {
         position: "top-right",
         autoClose: 5000,
