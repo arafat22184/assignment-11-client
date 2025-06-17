@@ -10,7 +10,7 @@ import {
 import { Link, useNavigate } from "react-router";
 import registerAnimation from "../assets/Animations/registerAnimation.json";
 import { HiPhotograph, HiUser } from "react-icons/hi";
-import { useContext, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import { AuthContext } from "../Provider/AuthProvider";
 import { toast } from "react-toastify";
 
@@ -19,6 +19,10 @@ const Register = () => {
   const navigate = useNavigate();
   const { createUser, updateUser, setUser, location, googleLogIn } =
     useContext(AuthContext);
+
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, []);
 
   const handlePassCheck = (e) => {
     const password = e.target.value;

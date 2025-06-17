@@ -1,7 +1,7 @@
 /* eslint-disable no-unused-vars */
 import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
 import { useNavigate } from "react-router";
-import { useContext, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import { motion } from "framer-motion";
 import { FaEye } from "react-icons/fa";
 import LoadingSpinner from "../Components/LoadingSpinner";
@@ -16,7 +16,9 @@ const Wishlist = () => {
   const queryClient = useQueryClient();
   const { user, loading } = useContext(AuthContext);
   const [hoveredCard, setHoveredCard] = useState(null);
-
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, []);
   const {
     data: wishlist = [],
     isLoading,

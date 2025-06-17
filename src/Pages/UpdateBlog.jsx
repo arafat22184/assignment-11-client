@@ -27,6 +27,20 @@ const UpdateBlog = () => {
   const [error, setError] = useState("");
 
   const { title, image, shortDescription, category, content, tags, _id } = blog;
+  const [previewImage, setPreviewImage] = useState(image);
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, []);
+
+  const handleFileChange = (e) => {
+    const file = e.target.files[0];
+    if (file) {
+      setPreviewImage(URL.createObjectURL(file));
+    } else {
+      setPreviewImage(null);
+    }
+  };
+
   useEffect(() => {
     axiosSecure
       .get(`/blogs/${id}`)
@@ -49,7 +63,7 @@ const UpdateBlog = () => {
     "Environment",
   ];
 
-  const handleUpdate = (e) => {
+  const handleUpdate = async (e) => {
     e.preventDefault();
     setLoading(true);
 
@@ -59,82 +73,103 @@ const UpdateBlog = () => {
       showCancelButton: true,
       confirmButtonText: "Save",
       denyButtonText: `Don't save`,
-    }).then((result) => {
+    }).then(async (result) => {
       if (result.isConfirmed) {
         const form = e.target;
         const title = form.title.value;
-        const image = form.image.value;
+        const image = form.imageUrl?.value;
+        const imageFile = form.imageFile?.files[0];
         const category = form.category.value;
         const tags = form.tags.value.split(",").map((tag) => tag.trim());
         const content = form.content.value;
-        const wordCount = content.trim().split(/\s+/).length;
         const shortDescription = form.shortDescription.value;
+        const wordCount = content.trim().split(/\s+/).length;
 
-        const updateBlog = {
-          title,
-          image,
-          category,
-          tags,
-          shortDescription,
-          content,
-          wordCount,
-        };
+        const formData = new FormData();
 
-        // Send Blog Data to DB
-        axiosSecure
-          .put(`${import.meta.env.VITE_API_LINK}/blogs/${_id}`, updateBlog)
-          .then((res) => {
-            if (res.data.modifiedCount) {
-              toast.success("Blog updated successfully!", {
-                position: "top-right",
-                autoClose: 5000,
-                hideProgressBar: false,
-                closeOnClick: false,
-                pauseOnHover: true,
-                draggable: true,
-                progress: undefined,
-                theme: "colored",
-              });
-              navigate(`/blog/${_id}`);
-              window.scrollTo(0, 0);
-            } else {
-              toast.error("Update minimum one field then try again.", {
-                position: "top-right",
-                autoClose: 5000,
-                hideProgressBar: false,
-                closeOnClick: false,
-                pauseOnHover: true,
-                draggable: true,
-                progress: undefined,
-                theme: "colored",
-              });
+        formData.append("title", title);
+        formData.append("category", category);
+        formData.append("tags", JSON.stringify(tags));
+        formData.append("content", content);
+        formData.append("shortDescription", shortDescription);
+        formData.append("wordCount", wordCount);
+        formData.append("authorName", user.displayName);
+        formData.append("authorEmail", user.email);
+        formData.append("authorPhoto", user.photoURL);
+
+        if (imageFile) {
+          formData.append("imageFile", imageFile);
+        } else if (image) {
+          formData.append("imageUrl", image);
+        } else {
+          toast.error(
+            "Oops! Add an image by uploading a file or entering a URL.",
+            {
+              position: "top-right",
+              autoClose: 5000,
+              hideProgressBar: false,
+              closeOnClick: false,
+              pauseOnHover: true,
+              draggable: true,
+              progress: undefined,
+              theme: "colored",
             }
-          })
-          .catch((error) => {
-            if (error) {
-              toast.error("Failed to update blog. Try again.", {
-                position: "top-right",
-                autoClose: 5000,
-                hideProgressBar: false,
-                closeOnClick: false,
-                pauseOnHover: true,
-                draggable: true,
-                progress: undefined,
-                theme: "colored",
-              });
-              setLoading(false);
-              window.scrollTo(0, 0);
-            }
-          })
-          .finally(() => {
-            setLoading(false);
+          );
+          setLoading(false);
+          return;
+        }
+
+        try {
+          const res = await axiosSecure.put(
+            `${import.meta.env.VITE_API_LINK}/blogs/${_id}`,
+            formData
+          );
+
+          if (res.data.modifiedCount) {
+            toast.success("Blog updated successfully!", {
+              position: "top-right",
+              autoClose: 5000,
+              hideProgressBar: false,
+              closeOnClick: false,
+              pauseOnHover: true,
+              draggable: true,
+              progress: undefined,
+              theme: "colored",
+            });
+            navigate(`/blog/${_id}`);
+            window.scrollTo(0, 0);
+          } else {
+            toast.error("Update minimum one field then try again.", {
+              position: "top-right",
+              autoClose: 5000,
+              hideProgressBar: false,
+              closeOnClick: false,
+              pauseOnHover: true,
+              draggable: true,
+              progress: undefined,
+              theme: "colored",
+            });
+          }
+        } catch (error) {
+          toast.error("Failed to update blog. Try again.", {
+            position: "top-right",
+            autoClose: 5000,
+            hideProgressBar: false,
+            closeOnClick: false,
+            pauseOnHover: true,
+            draggable: true,
+            progress: undefined,
+            theme: "colored",
           });
+          window.scrollTo(0, 0);
+        }
       } else if (result.isDenied) {
         Swal.fire("Changes are not saved", "", "info");
         window.history.back();
-      } else {
-        setLoading(false);
       }
+
+      // ✅ Always reset loading
+      setLoading(false);
     });
   };
 
@@ -192,19 +227,59 @@ const UpdateBlog = () => {
             />
           </div>
 
-          {/* Image URL */}
-          <div>
-            <label className=" mb-1 flex items-center gap-1">
-              <FiImage /> Image URL
-            </label>
-            <input
-              name="image"
-              type="url"
-              defaultValue={image}
-              required
-              className="w-full bg-slate-800 text-white border border-slate-700 rounded-md px-4 py-2 focus:ring-2 focus:ring-blue-500 outline-none"
-              placeholder="https://example.com/image.jpg"
-            />
+          {/* PHOTO */}
+          <div className="space-y-6 border border-slate-700 p-4 rounded-2xl">
+            {/* Image URL */}
+            <div className="w-full">
+              <label className="flex items-center gap-1 text-white mb-1">
+                <FiImage /> Image URL
+                <span className="text-slate-400 ml-1">(optional)</span>
+              </label>
+              <input
+                name="imageUrl"
+                type="url"
+                defaultValue={image}
+                className="w-full bg-slate-800 text-white border border-slate-700 rounded-md px-4 py-2 focus:ring-2 focus:ring-blue-500 outline-none"
+                placeholder="https://example.com/image.jpg"
+              />
+            </div>
+
+            {/* Centered "or" Divider */}
+            <div className="relative flex items-center justify-center">
+              <span className="absolute bg-slate-900 px-3 text-blue-500">
+                or
+              </span>
+              <div className="w-full border-t border-slate-500" />
+            </div>
+
+            {/* Image File Upload */}
+            <div className="w-full">
+              <label className="flex items-center gap-1 text-white mb-1">
+                <FiUploadCloud /> Upload Image File
+                <span className="text-slate-400 ml-1">(optional)</span>
+              </label>
+              <input
+                name="imageFile"
+                type="file"
+                onChange={handleFileChange}
+                accept="image/png, image/jpeg, image/jpg"
+                className="file:bg-blue-600 file:text-white file:border-none file:mx-4 file:px-4 file:py-2 file:rounded-md bg-slate-800 text-white border border-slate-700 rounded-md py-2 focus:ring-2 focus:ring-blue-500 outline-none w-full"
+              />
+            </div>
+            {/* Optional Image Preview */}
+            {previewImage ? (
+              <img
+                src={previewImage}
+                alt="Preview"
+                className="max-h-64 rounded-md border border-slate-700"
+              />
+            ) : (
+              <img
+                src={image}
+                alt="Preview"
+                className="max-h-64 rounded-md border border-slate-700"
+              />
+            )}
           </div>
 
           {/* Category */}
@@ -215,7 +290,7 @@ const UpdateBlog = () => {
             </label>
             <select
               name="category"
-              value={category}
+              defaultValue={category}
               required
               className="w-full px-4 py-2 bg-slate-800 border border-slate-700 rounded-md"
             >

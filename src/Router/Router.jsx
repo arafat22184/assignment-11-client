@@ -21,21 +21,19 @@ const router = createBrowserRouter([
       {
         index: true,
         Component: Home,
-        loader: async () => {
-          const res = await fetch(
-            `${import.meta.env.VITE_API_LINK}/recentBlogs`
-          );
-          return res.json();
-        },
+        loader: async () =>
+          fetch(`${import.meta.env.VITE_API_LINK}/recentBlogs`).then((res) =>
+            res.json()
+          ),
         hydrateFallbackElement: <LoadingSpinner></LoadingSpinner>,
       },
       {
         path: "/allBlogs",
         Component: AllBlogs,
-        loader: async () => {
-          const res = await fetch(`${import.meta.env.VITE_API_LINK}/blogs`);
-          return res.json();
-        },
+        loader: () =>
+          fetch(`${import.meta.env.VITE_API_LINK}/blogs`).then((res) =>
+            res.json()
+          ),
         hydrateFallbackElement: <LoadingSpinner></LoadingSpinner>,
       },
       {

@@ -4,7 +4,7 @@ import { FiHeart } from "react-icons/fi";
 import { use, useEffect, useState } from "react";
 import { AuthContext } from "../Provider/AuthProvider";
 import { toast } from "react-toastify";
-import { Navigate, useLocation, useNavigate } from "react-router";
+import { useLocation, useNavigate } from "react-router";
 import { FaEye } from "react-icons/fa";
 import useAxiosSecure from "../Hooks/useAxiosSecure";
 
@@ -21,6 +21,8 @@ const BlogCard = ({ blog }) => {
   useEffect(() => {
     if (user && blog?.likes?.length) {
       setIsLiked(blog.likes.includes(user.uid));
+    } else {
+      setIsLiked(false);
     }
   }, [user, blog]);
 

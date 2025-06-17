@@ -1,5 +1,5 @@
 /* eslint-disable no-unused-vars */
-import { useContext, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import { AuthContext } from "../Provider/AuthProvider";
 import { motion } from "framer-motion";
 import {
@@ -12,7 +12,6 @@ import {
 import { MdEmail, MdOutlineCategory, MdPerson } from "react-icons/md";
 import { toast } from "react-toastify";
 import { useNavigate } from "react-router";
-import axios from "axios";
 import useAxiosSecure from "../Hooks/useAxiosSecure";
 
 const AddBlog = () => {
@@ -20,6 +19,19 @@ const AddBlog = () => {
   const axiosSecure = useAxiosSecure();
   const navigate = useNavigate();
   const [loading, setLoading] = useState(false);
+  const [previewImage, setPreviewImage] = useState(null);
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, []);
+
+  const handleFileChange = (e) => {
+    const file = e.target.files[0];
+    if (file) {
+      setPreviewImage(URL.createObjectURL(file));
+    } else {
+      setPreviewImage(null);
+    }
+  };
 
   const categories = [
     "Technology",
@@ -32,69 +44,71 @@ const AddBlog = () => {
     "Environment",
   ];
 
-  const handleAddBlog = (e) => {
+  const handleAddBlog = async (e) => {
     e.preventDefault();
     setLoading(true);
 
     const form = e.target;
     const title = form.title.value;
-    const image = form.image.value;
+    const image = form.imageUrl?.value;
+    const imageFile = form.imageFile?.files[0];
     const category = form.category.value;
     const tags = form.tags.value.split(",").map((tag) => tag.trim());
     const content = form.content.value;
-    const wordCount = content.trim().split(/\s+/).length;
     const shortDescription = form.shortDescription.value;
+    const wordCount = content.trim().split(/\s+/).length;
 
-    const blogData = {
-      title,
-      image,
-      shortDescription,
-      category,
-      content,
-      author: {
-        name: user.displayName,
-        email: user.email,
-        photo: user.photoURL,
-      },
-      createdAt: new Date().toISOString(),
-      tags,
-      likes: [],
-      comments: [],
-      wordCount,
-    };
+    const formData = new FormData();
 
-    // Send Blog Data to DB
-    axiosSecure
-      .post(`${import.meta.env.VITE_API_LINK}/blogs`, blogData)
-      .then((res) => {
-        if (res.data.insertedId) {
-          setLoading(false);
-          toast.success("Blog posted successfully!", {
-            position: "top-right",
-            autoClose: 5000,
-            hideProgressBar: false,
-            closeOnClick: false,
-            pauseOnHover: true,
-            draggable: true,
-            progress: undefined,
-            theme: "colored",
-          });
-          navigate("/");
-        }
-      })
-      .catch(() => {
-        setLoading(false);
-        toast.error("Failed to post blog. Try again.", {
-          position: "top-right",
-          autoClose: 5000,
-          hideProgressBar: false,
-          closeOnClick: false,
-          pauseOnHover: true,
-          draggable: true,
-          progress: undefined,
-          theme: "colored",
-        });
+    formData.append("title", title);
+    formData.append("category", category);
+    formData.append("tags", JSON.stringify(tags));
+    formData.append("content", content);
+    formData.append("shortDescription", shortDescription);
+    formData.append("wordCount", wordCount);
+    formData.append("authorName", user.displayName);
+    formData.append("authorEmail", user.email);
+    formData.append("authorPhoto", user.photoURL);
+
+    if (imageFile) {
+      formData.append("imageFile", imageFile);
+    } else if (image) {
+      formData.append("imageUrl", image);
+    } else {
+      toast.error("Oops! Add an image by uploading a file or entering a URL.", {
+        position: "top-right",
+        autoClose: 5000,
+        hideProgressBar: false,
+        closeOnClick: false,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "colored",
       });
+      setLoading(false);
+      return;
+    }
+
+    try {
+      const res = await axiosSecure.post(
+        `${import.meta.env.VITE_API_LINK}/blogs`,
+        formData,
+        {
+          headers: {
+            "Content-Type": "multipart/form-data",
+          },
+        }
+      );
+
+      if (res.data.insertedId) {
+        toast.success("Blog posted successfully!");
+        navigate("/");
+      }
+    } catch (err) {
+      toast.error("Failed to post blog. Try again.");
+    } finally {
+      setLoading(false);
+    }
   };
 
   return (
@@ -112,7 +126,7 @@ const AddBlog = () => {
         <form onSubmit={handleAddBlog} className="space-y-6">
           {/* Title */}
           <div>
-            <label className=" mb-1 flex items-center gap-1">
+            <label className="mb-1 flex items-center gap-1 text-white">
               <FiFileText /> Blog Title
             </label>
             <input
@@ -124,30 +138,63 @@ const AddBlog = () => {
             />
           </div>
 
-          {/* Image URL */}
-          <div>
-            <label className=" mb-1 flex items-center gap-1">
-              <FiImage /> Image URL
-            </label>
-            <input
-              name="image"
-              type="url"
-              required
-              className="w-full bg-slate-800 text-white border border-slate-700 rounded-md px-4 py-2 focus:ring-2 focus:ring-blue-500 outline-none"
-              placeholder="https://example.com/image.jpg"
-            />
+          {/* PHOTO */}
+          <div className="space-y-6 border border-slate-700 p-4 rounded-2xl">
+            {/* Image URL */}
+            <div className="w-full">
+              <label className="flex items-center gap-1 text-white mb-1">
+                <FiImage /> Image URL
+                <span className="text-slate-400 ml-1">(optional)</span>
+              </label>
+              <input
+                name="imageUrl"
+                type="url"
+                className="w-full bg-slate-800 text-white border border-slate-700 rounded-md px-4 py-2 focus:ring-2 focus:ring-blue-500 outline-none"
+                placeholder="https://example.com/image.jpg"
+              />
+            </div>
+
+            {/* Centered "or" Divider */}
+            <div className="relative flex items-center justify-center">
+              <span className="absolute bg-slate-900 px-3 text-blue-500">
+                or
+              </span>
+              <div className="w-full border-t border-slate-500" />
+            </div>
+
+            {/* Image File Upload */}
+            <div className="w-full">
+              <label className="flex items-center gap-1 text-white mb-1">
+                <FiUploadCloud /> Upload Image File
+                <span className="text-slate-400 ml-1">(optional)</span>
+              </label>
+              <input
+                name="imageFile"
+                type="file"
+                onChange={handleFileChange}
+                accept="image/png, image/jpeg, image/jpg"
+                className="file:bg-blue-600 file:text-white file:border-none file:mx-4 file:px-4 file:py-2 file:rounded-md bg-slate-800 text-white border border-slate-700 rounded-md py-2 focus:ring-2 focus:ring-blue-500 outline-none w-full"
+              />
+            </div>
+            {/* Optional Image Preview */}
+            {previewImage && (
+              <img
+                src={previewImage}
+                alt="Preview"
+                className="max-h-64 rounded-md border border-slate-700"
+              />
+            )}
           </div>
 
           {/* Category */}
           <div>
-            <label className=" mb-1 flex items-center gap-1">
-              <MdOutlineCategory />
-              Category
+            <label className="mb-1 flex items-center gap-1 text-white">
+              <MdOutlineCategory /> Category
             </label>
             <select
               name="category"
               required
-              className="w-full px-4 py-2 bg-slate-800 border border-slate-700 rounded-md"
+              className="w-full px-4 py-2 bg-slate-800 text-white border border-slate-700 rounded-md"
             >
               <option value="">Select Category</option>
               {categories.map((cat, i) => (
@@ -160,7 +207,7 @@ const AddBlog = () => {
 
           {/* Tags */}
           <div>
-            <label className=" mb-1 flex items-center gap-1">
+            <label className="mb-1 flex items-center gap-1 text-white">
               <FiTag /> Tags{" "}
               <span className="text-slate-400">(comma-separated)</span>
             </label>
@@ -174,7 +221,7 @@ const AddBlog = () => {
 
           {/* Short Description */}
           <div>
-            <label className=" mb-1 flex items-center gap-1">
+            <label className="mb-1 flex items-center gap-1 text-white">
               <FiFileText /> Short Description
             </label>
             <textarea
@@ -188,7 +235,7 @@ const AddBlog = () => {
 
           {/* Content */}
           <div>
-            <label className="mb-1 flex items-center gap-1">
+            <label className="mb-1 flex items-center gap-1 text-white">
               <FiFileText /> Blog Content
             </label>
             <textarea
@@ -196,13 +243,14 @@ const AddBlog = () => {
               rows="8"
               required
               className="w-full bg-slate-800 text-white border border-slate-700 rounded-md px-4 py-2 focus:ring-2 focus:ring-blue-500 outline-none"
-              placeholder="WWrite your full blog description here…"
+              placeholder="Write your full blog description here…"
             />
           </div>
 
+          {/* Author Info */}
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
             <div>
-              <label className="mb-1 flex items-center gap-1">
+              <label className="mb-1 flex items-center gap-1 text-white">
                 <MdPerson /> Your Name
               </label>
               <input
@@ -210,11 +258,11 @@ const AddBlog = () => {
                 type="text"
                 readOnly
                 defaultValue={user.displayName}
-                className="w-full bg-slate-800 text-white border border-slate-700 rounded-md px-4 py-2 focus:ring-2 focus:ring-blue-500 outline-none"
+                className="w-full bg-slate-800 text-white border border-slate-700 rounded-md px-4 py-2"
               />
             </div>
             <div>
-              <label className="mb-1 flex items-center gap-1">
+              <label className="mb-1 flex items-center gap-1 text-white">
                 <MdEmail /> Your Email
               </label>
               <input
@@ -222,12 +270,12 @@ const AddBlog = () => {
                 type="email"
                 readOnly
                 defaultValue={user.email}
-                className="w-full bg-slate-800 text-white border border-slate-700 rounded-md px-4 py-2 focus:ring-2 focus:ring-blue-500 outline-none"
+                className="w-full bg-slate-800 text-white border border-slate-700 rounded-md px-4 py-2"
               />
             </div>
           </div>
 
-          {/* Submit Button */}
+          {/* Submit */}
           <motion.button
             type="submit"
             whileTap={{ scale: 0.95 }}
