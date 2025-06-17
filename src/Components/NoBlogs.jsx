@@ -2,7 +2,7 @@ import Lottie from "lottie-react";
 import noBlogs from "../assets/Animations/noBlogs.json";
 import { RiResetRightFill } from "react-icons/ri";
 
-const NoBlogs = ({ setSearchText, setBlogs, initialBlogs }) => {
+const NoBlogs = ({ setBlogs, initialBlogs }) => {
   return (
     <div className="flex flex-col justify-center items-center gap-6">
       <Lottie
@@ -20,7 +20,6 @@ const NoBlogs = ({ setSearchText, setBlogs, initialBlogs }) => {
 
       <button
         onClick={() => {
-          setSearchText("");
           setBlogs(initialBlogs);
         }}
         className="inline-flex items-center gap-2 px-5 py-2 bg-blue-500 hover:bg-blue-600 text-white rounded-full transition cursor-pointer"
