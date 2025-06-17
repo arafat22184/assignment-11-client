@@ -116,7 +116,7 @@ const AllBlogs = () => {
               />
               <button
                 type="submit"
-                className="bg-blue-500 text-white px-5 py-3 rounded-r-full"
+                className="bg-blue-500 text-white px-5 py-3 rounded-r-full cursor-pointer"
               >
                 <BiSearchAlt className="text-xl" />
               </button>

@@ -25,8 +25,9 @@ const UpdateBlog = () => {
   const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
   const [error, setError] = useState("");
+  const [selectedCategory, setSelectedCategory] = useState("");
 
-  const { title, image, shortDescription, category, content, tags, _id } = blog;
+  const { title, image, shortDescription, content, tags, _id } = blog;
   const [previewImage, setPreviewImage] = useState(image);
   useEffect(() => {
     window.scrollTo(0, 0);
@@ -46,6 +47,7 @@ const UpdateBlog = () => {
       .get(`/blogs/${id}`)
       .then((res) => {
         setBlog(res.data);
+        setSelectedCategory(res.data.category);
       })
       .catch((err) => {
         setError(err);
@@ -124,7 +126,6 @@ const UpdateBlog = () => {
             `${import.meta.env.VITE_API_LINK}/blogs/${_id}`,
             formData
           );
-
           if (res.data.modifiedCount) {
             toast.success("Blog updated successfully!", {
               position: "top-right",
@@ -290,7 +291,8 @@ const UpdateBlog = () => {
             </label>
             <select
               name="category"
-              defaultValue={category}
+              value={selectedCategory}
+              onChange={(e) => setSelectedCategory(e.target.value)}
               required
               className="w-full px-4 py-2 bg-slate-800 border border-slate-700 rounded-md"
             >

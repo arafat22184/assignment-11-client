@@ -94,7 +94,7 @@
 
 ## 🔁 Data Flow & Logic
 
-- 🔐 **JWT Auth Flow**: Firebase → Server verifies token → Signs custom JWT → Set in cookies
+- 🔐 **JWT Auth Flow**: Firebase → Server verifies token
 - 💬 **Comment System**: Only other users can comment on a blog (not owner)
 - 🧠 **Smart Features**:
   - Wishlist stores blog `_id`
