@@ -133,7 +133,7 @@ const Footer = () => {
           </h3>
           <div className={`flex space-x-4 text-xl`}>
             <a
-              href="https://www.facebook.com/"
+              href="https://www.facebook.com/a.al.arafat.5/"
               target="_blank"
               rel="noopener noreferrer"
               className="hover:text-blue-500 p-1 hover:bg-white rounded-sm"
@@ -141,7 +141,7 @@ const Footer = () => {
               <FaFacebookF size={20} />
             </a>
             <a
-              href="https://twitter.com/"
+              href="https://x.com/arafat22184"
               target="_blank"
               rel="noopener noreferrer"
               className="hover:text-blue-500 p-1 hover:bg-white rounded-sm"
@@ -149,7 +149,7 @@ const Footer = () => {
               <FaTwitter size={20} />
             </a>
             <a
-              href="https://www.linkedin.com/"
+              href="https://www.linkedin.com/in/md-abdulla-all-arafat-8a9892200/"
               target="_blank"
               rel="noopener noreferrer"
               className="hover:text-blue-500 hover:bg-white rounded-sm p-1"
@@ -157,7 +157,7 @@ const Footer = () => {
               <FaLinkedinIn size={20} />
             </a>
             <a
-              href="https://github.com/"
+              href="https://github.com/arafat22184"
               target="_blank"
               rel="noopener noreferrer"
               className="hover:text-black hover:bg-white hover:rounded-full p-1"

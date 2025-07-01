@@ -19,7 +19,7 @@
 ## 🌐 Live Demo
 
 - **Client:** [Blogify Client](https://assignment-11-client-32ff9.web.app/)
-- **Server:** [Blogify Server](http://localhost:3000/)
+- **Server:** [Blogify Server](https://assignment-11-server-lime-zeta.vercel.app/)
 
 ---
 
