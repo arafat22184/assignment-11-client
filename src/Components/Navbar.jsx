@@ -4,7 +4,6 @@ import { AuthContext } from "../Provider/AuthProvider";
 import { toast } from "react-toastify";
 import { MdLogout } from "react-icons/md";
 import { RiMenu2Fill } from "react-icons/ri";
-import { IoMdArrowDropdown } from "react-icons/io";
 import {
   FaHome,
   FaBlog,
@@ -22,16 +21,16 @@ const Navbar = () => {
   const handleSignOut = () => {
     logOut()
       .then(() => {
-        toast.success("Sign out Successfully", {
+        toast.success("Signed out", {
           position: "top-right",
-          autoClose: 5000,
+          autoClose: 4000,
           theme: "colored",
         });
       })
       .catch(() => {
-        toast.error("Oops! Something went wrong. Please try again later.", {
+        toast.error("Something went wrong!", {
           position: "top-right",
-          autoClose: 5000,
+          autoClose: 4000,
           theme: "colored",
         });
       });
@@ -52,7 +51,7 @@ const Navbar = () => {
       <li>
         <NavLink
           className={({ isActive }) =>
-            `flex items-center gap-2 text-white text-sm px-4 py-2 rounded hover:bg-blue-600 transition font-medium ${
+            `flex items-center gap-2 text-white text-xs xl:text-sm px-3 xl:px-4 py-2 rounded hover:bg-blue-600 transition font-medium ${
               isActive ? "bg-blue-700" : ""
             }`
           }
@@ -64,7 +63,7 @@ const Navbar = () => {
       <li>
         <NavLink
           className={({ isActive }) =>
-            `flex items-center gap-2 text-white text-sm px-4 py-2 rounded hover:bg-blue-600 transition font-medium ${
+            `flex items-center gap-2 text-white text-xs xl:text-sm px-3 xl:px-4 py-2 rounded hover:bg-blue-600 transition font-medium ${
               isActive ? "bg-blue-700" : ""
             }`
           }
@@ -77,7 +76,7 @@ const Navbar = () => {
         <li>
           <NavLink
             className={({ isActive }) =>
-              `flex items-center gap-2 text-white text-sm px-4 py-2 rounded hover:bg-blue-600 transition font-medium ${
+              `flex items-center gap-2 text-white text-xs xl:text-sm px-3 xl:px-4 py-2 rounded hover:bg-blue-600 transition font-medium ${
                 isActive ? "bg-blue-700" : ""
               }`
             }
@@ -90,7 +89,7 @@ const Navbar = () => {
       <li>
         <NavLink
           className={({ isActive }) =>
-            `flex items-center gap-2 text-white text-sm px-4 py-2 rounded hover:bg-blue-600 transition font-medium ${
+            `flex items-center gap-2 text-white text-xs xl:text-sm px-3 xl:px-4 py-2 rounded hover:bg-blue-600 transition font-medium ${
               isActive ? "bg-blue-700" : ""
             }`
           }
@@ -103,7 +102,7 @@ const Navbar = () => {
         <li>
           <NavLink
             className={({ isActive }) =>
-              `flex items-center gap-2 text-white text-sm px-4 py-2 rounded hover:bg-blue-600 transition font-medium ${
+              `flex items-center gap-2 text-white text-xs xl:text-sm px-3 xl:px-4 py-2 rounded hover:bg-blue-600 transition font-medium ${
                 isActive ? "bg-blue-700" : ""
               }`
             }
@@ -116,7 +115,7 @@ const Navbar = () => {
       <li>
         <NavLink
           className={({ isActive }) =>
-            `flex items-center gap-2 text-white text-sm px-4 py-2 rounded hover:bg-blue-600 transition font-medium ${
+            `flex items-center gap-2 text-white text-xs xl:text-sm px-3 xl:px-4 py-2 rounded hover:bg-blue-600 transition font-medium ${
               isActive ? "bg-blue-700" : ""
             }`
           }
@@ -132,7 +131,7 @@ const Navbar = () => {
     <>
       <NavLink
         className={({ isActive }) =>
-          `text-sm font-semibold py-2 px-4 border rounded transition ${
+          `text-xs xl:text-sm font-semibold py-2 px-3 xl:px-4 border rounded transition ${
             isActive
               ? "bg-blue-500 text-white"
               : "border-blue-500 text-white hover:bg-blue-500 hover:text-white"
@@ -144,7 +143,7 @@ const Navbar = () => {
       </NavLink>
       <NavLink
         className={({ isActive }) =>
-          `text-sm font-semibold py-2 px-4 border rounded transition ${
+          `text-xs xl:text-sm font-semibold py-2 px-3 xl:px-4 border rounded transition ${
             isActive
               ? "bg-blue-500 text-white"
               : "border-blue-500 text-white hover:bg-blue-500 hover:text-white"
@@ -158,7 +157,8 @@ const Navbar = () => {
   );
 
   return (
-    <nav className="navbar p-4 xl:py-2 xl:px-0 xl:max-w-7xl mx-auto relative">
+    <nav className="navbar p-3 md:px-5 xl:px-0 max-w-screen-xl mx-auto relative justify-between">
+      {/* Start */}
       <div className="navbar-start">
         <div className="dropdown space-x-3">
           <div tabIndex={0} role="button" className="text-white lg:hidden">
@@ -182,6 +182,7 @@ const Navbar = () => {
           </ul>
         </div>
 
+        {/* Logo */}
         <Link className="flex items-center gap-3" to="/">
           <img
             src="https://i.ibb.co/cSqJhKWm/logo-Light.png"
@@ -194,11 +195,18 @@ const Navbar = () => {
         </Link>
       </div>
 
+      {/* Center */}
       <div className="navbar-center hidden lg:flex">
-        <ul className="menu menu-horizontal space-x-2">{links}</ul>
+        <ul className="flex flex-wrap items-center gap-1 lg:gap-2 xl:gap-4">
+          {links}
+        </ul>
       </div>
 
-      <div className="navbar-end hidden lg:flex relative" ref={profileRef}>
+      {/* End */}
+      <div
+        className="navbar-end hidden lg:flex relative min-w-[100px]"
+        ref={profileRef}
+      >
         {user ? (
           <div className="relative">
             <button
@@ -231,7 +239,7 @@ const Navbar = () => {
             )}
           </div>
         ) : (
-          <div className="flex items-center gap-3">{loginLinks}</div>
+          <div className="flex items-center gap-2">{loginLinks}</div>
         )}
       </div>
     </nav>
