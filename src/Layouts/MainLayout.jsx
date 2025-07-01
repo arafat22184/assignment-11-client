@@ -1,5 +1,5 @@
-import Navbar from "../Components/Navbar";
 import { Outlet } from "react-router";
+import Navbar from "../Components/Navbar";
 import Footer from "../Components/Footer";
 import { ToastContainer } from "react-toastify";
 import BackToTopButton from "../Components/BackToTopButton";
@@ -7,13 +7,20 @@ import BackToTopButton from "../Components/BackToTopButton";
 const MainLayout = () => {
   return (
     <div className="bg-slate-950 min-h-screen">
-      <div className="border-b border-blue-400">
-        <Navbar></Navbar>
+      {/* Sticky Navbar */}
+      <div className="sticky top-0 z-50 bg-slate-950 border-b border-blue-500">
+        <Navbar />
       </div>
+
+      {/* Main content area */}
       <div className="min-h-[calc(100vh-408px)]">
-        <Outlet></Outlet>
+        <Outlet />
       </div>
-      <Footer></Footer>
+
+      {/* Footer */}
+      <Footer />
+
+      {/* Toast notifications */}
       <ToastContainer
         position="top-right"
         autoClose={5000}
@@ -26,7 +33,9 @@ const MainLayout = () => {
         pauseOnHover
         theme="light"
       />
-      <BackToTopButton></BackToTopButton>
+
+      {/* Back to top button */}
+      <BackToTopButton />
     </div>
   );
 };

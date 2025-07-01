@@ -48,7 +48,6 @@ const Navbar = () => {
       >
         Home
       </NavLink>
-
       <NavLink
         className={({ isActive }) =>
           `hover:bg-blue-500 text-[18px] text-white hover:text-white py-3 px-7 font-semibold rounded ${
@@ -59,7 +58,6 @@ const Navbar = () => {
       >
         All Blogs
       </NavLink>
-
       <NavLink
         className={({ isActive }) =>
           `hover:bg-blue-500 text-[18px] text-white hover:text-white py-3 px-7 font-semibold rounded ${
@@ -70,7 +68,6 @@ const Navbar = () => {
       >
         Add Blog
       </NavLink>
-
       <NavLink
         className={({ isActive }) =>
           `hover:bg-blue-500 text-[18px] text-white hover:text-white py-3 px-7 font-semibold rounded ${
@@ -81,7 +78,6 @@ const Navbar = () => {
       >
         Featured Blogs
       </NavLink>
-
       <NavLink
         className={({ isActive }) =>
           `hover:bg-blue-500 text-[18px] text-white hover:text-white py-3 px-7 font-semibold rounded ${
@@ -94,11 +90,12 @@ const Navbar = () => {
       </NavLink>
     </>
   );
+
   const loginLinks = (
     <>
       <NavLink
         className={({ isActive }) =>
-          `bg-blue-500 text-[18px]  py-3 px-6 font-semibold hover:bg-blue-500 hover:text-white rounded border-2 border-blue-500 ${
+          `bg-blue-500 text-[18px] py-3 px-6 font-semibold hover:bg-blue-500 hover:text-white rounded border-2 border-blue-500 ${
             isActive ? "text-white" : "bg-white text-blue-500"
           }`
         }
@@ -108,8 +105,8 @@ const Navbar = () => {
       </NavLink>
       <NavLink
         className={({ isActive }) =>
-          `bg-blue-500 text-[18px]  py-3 px-6 font-semibold hover:bg-blue-500 hover:text-white rounded border-2 border-blue-500 ${
-            isActive ? "text-white" : " bg-white text-blue-500"
+          `bg-blue-500 text-[18px] py-3 px-6 font-semibold hover:bg-blue-500 hover:text-white rounded border-2 border-blue-500 ${
+            isActive ? "text-white" : "bg-white text-blue-500"
           }`
         }
         to={"/register"}
@@ -123,14 +120,13 @@ const Navbar = () => {
     <>
       <img
         referrerPolicy="no-referrer"
-        className="w-14 h-14 rounded-full border-blue-500 border-4 "
+        className="w-14 h-14 rounded-full border-blue-500 border-4"
         src={user?.photoURL}
-        alt="user photo"
+        alt="user"
       />
-
       <button
         onClick={handleSignOut}
-        className=" text-[18px] text-red-500 py-2 px-4 font-semibold border rounded cursor-pointer hover:bg-red-500 border-red-500 hover:text-white flex items-center gap-2"
+        className="text-[18px] text-red-500 py-2 px-4 font-semibold border rounded cursor-pointer hover:bg-red-500 border-red-500 hover:text-white flex items-center gap-2"
       >
         Logout{" "}
         <span className="text-2xl">
@@ -141,7 +137,7 @@ const Navbar = () => {
   );
 
   return (
-    <nav className="navbar p-4 xl:py-2 xl:p-0 xl:max-w-11/12 mx-auto">
+    <nav className="navbar p-4 xl:py-2 xl:p-0 xl:max-w-7xl mx-auto">
       <div className="navbar-start">
         <div className="dropdown space-x-3">
           <div tabIndex={0} role="button" className="text-white lg:hidden">
@@ -149,7 +145,7 @@ const Navbar = () => {
           </div>
           <ul
             tabIndex={0}
-            className="menu menu-sm dropdown-content bg-slate-950 rounded-box z-1 mt-3 w-52 p-2 shadow space-y-3"
+            className="menu menu-sm dropdown-content bg-slate-950 rounded-box z-10 mt-3 w-52 p-2 shadow space-y-3"
           >
             {links}
             {user ? (
@@ -172,9 +168,11 @@ const Navbar = () => {
           </h1>
         </Link>
       </div>
+
       <div className="navbar-center hidden lg:flex">
         <ul className="menu menu-horizontal px-1">{links}</ul>
       </div>
+
       {user ? (
         <div className="navbar-end hidden lg:flex lg:flex-col xl:flex-row gap-3">
           {logOutBtn}

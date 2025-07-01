@@ -31,7 +31,7 @@ const OurGallery = () => {
     >
       <div className="max-w-7xl mx-auto">
         {/* Sticky Title */}
-        <div className="sticky top-0 z-30 bg-slate-950/90 backdrop-blur-lg py-4 dmSerif">
+        <div className="sticky top-20 z-30 bg-slate-950/90 backdrop-blur-lg py-4 dmSerif">
           <motion.div
             initial={{ opacity: 0, y: -20 }}
             animate={inView ? { opacity: 1, y: 0 } : {}}

@@ -51,7 +51,7 @@ const Banner = () => {
 
   return (
     <section
-      className="relative w-full h-[90vh] md:h-[80vh] sm:h-[70vh] overflow-hidden"
+      className="relative w-full xl:max-w-7xl mx-auto h-[60vh] md:h-[60vh] sm:h-[70vh] overflow-hidden rounded-b-2xl"
       id="banner"
     >
       <Swiper
