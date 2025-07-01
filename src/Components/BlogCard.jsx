@@ -97,7 +97,7 @@ const BlogCard = ({ blog }) => {
       whileHover={{ scale: 1.02 }}
       onHoverStart={() => setIsHovered(true)}
       onHoverEnd={() => setIsHovered(false)}
-      className="relative max-w-md min-h-[460px] flex flex-col justify-between rounded-xl overflow-hidden shadow-lg bg-slate-800 border border-slate-700 hover:border-blue-400 transition-all duration-300"
+      className="relative max-w-md min-h-[480px] flex flex-col justify-between rounded-xl overflow-hidden shadow-lg bg-slate-800 border border-slate-700 hover:border-blue-400 transition-all duration-300"
     >
       {/* Image */}
       <div className="relative h-48 overflow-hidden">
