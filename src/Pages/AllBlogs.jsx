@@ -95,7 +95,7 @@ const AllBlogs = () => {
         {/* Filter Panel */}
         <div
           ref={ref}
-          className="lg:sticky lg:top-20 lg:z-30 bg-slate-950/90 backdrop-blur-xl py-4 border-b border-blue-900 shadow-md"
+          className="lg:sticky lg:top-20 xl:top-[66px] lg:z-30 bg-slate-950/90 backdrop-blur-xl py-4 border-b border-blue-900 shadow-md"
         >
           {/* Mobile Filter Toggle */}
           <div className="lg:hidden flex justify-end px-4 mb-4">

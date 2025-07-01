@@ -8,14 +8,14 @@ const RecentBlogs = () => {
   const blogs = useLoaderData();
 
   return (
-    <section className="relative py-20 px-4 md:px-6 xl:px-0 bg-slate-950 overflow-hidden">
+    <section className="relative py-10 px-4 md:px-6 xl:px-0 bg-slate-950 overflow-hidden">
       {/* Title */}
       <motion.div
         initial={{ opacity: 0, y: 20 }}
         whileInView={{ opacity: 1, y: 0 }}
         viewport={{ once: true }}
         transition={{ duration: 0.6, delay: 0.2 }}
-        className="text-center mb-14"
+        className="text-center mb-6"
       >
         <h2 className="text-4xl md:text-5xl font-bold leading-tight text-white dmSerif">
           Recent <span className="text-blue-400">Blogs</span>

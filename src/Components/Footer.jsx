@@ -1,14 +1,18 @@
 import React from "react";
 import {
-  FaFacebook,
   FaFacebookF,
   FaGithub,
   FaLink,
   FaLinkedinIn,
   FaTwitter,
+  FaHome,
+  FaBookOpen,
+  FaPlus,
+  FaStar,
+  FaHeart,
 } from "react-icons/fa";
 import { IoMdPersonAdd } from "react-icons/io";
-import { MdArrowForwardIos, MdContacts } from "react-icons/md";
+import { MdContacts, MdEmail, MdPhone, MdLocationOn } from "react-icons/md";
 import { Link } from "react-router";
 
 const Footer = () => {
@@ -58,51 +62,46 @@ const Footer = () => {
           <ul className="text-gray-400 space-y-3 text-sm">
             <li className="transform hover:translate-x-2 transition-transform duration-300">
               <Link
-                className="flex items-center gap-1 hover:text-white"
+                className="flex items-center gap-2 hover:text-white"
                 to={"/"}
               >
-                <MdArrowForwardIos className="text-blue-500" />{" "}
-                <span>Home</span>
+                <FaHome className="text-blue-500" /> <span>Home</span>
               </Link>
             </li>
 
             <li className="transform hover:translate-x-2 transition-transform duration-300">
               <Link
-                className="flex items-center gap-1 hover:text-white"
+                className="flex items-center gap-2 hover:text-white"
                 to={"/allBlogs"}
               >
-                <MdArrowForwardIos className="text-blue-500" />{" "}
-                <span>All Blogs</span>
+                <FaBookOpen className="text-blue-500" /> <span>All Blogs</span>
               </Link>
             </li>
 
             <li className="transform hover:translate-x-2 transition-transform duration-300">
               <Link
-                className="flex items-center gap-1 hover:text-white"
+                className="flex items-center gap-2 hover:text-white"
                 to={"/addBlog"}
               >
-                <MdArrowForwardIos className="text-blue-500" />{" "}
-                <span>Add Blog</span>
+                <FaPlus className="text-blue-500" /> <span>Add Blog</span>
               </Link>
             </li>
 
             <li className="transform hover:translate-x-2 transition-transform duration-300">
               <Link
-                className="flex items-center gap-1 hover:text-white"
+                className="flex items-center gap-2 hover:text-white"
                 to={"/featuredBlogs"}
               >
-                <MdArrowForwardIos className="text-blue-500" />{" "}
-                <span>Featured Blogs</span>
+                <FaStar className="text-blue-500" /> <span>Featured Blogs</span>
               </Link>
             </li>
 
             <li className="transform hover:translate-x-2 transition-transform duration-300">
               <Link
-                className="flex items-center gap-1 hover:text-white"
+                className="flex items-center gap-2 hover:text-white"
                 to={"/wishlist"}
               >
-                <MdArrowForwardIos className="text-blue-500" />{" "}
-                <span>Wishlist</span>
+                <FaHeart className="text-blue-500" /> <span>Wishlist</span>
               </Link>
             </li>
           </ul>
@@ -114,10 +113,16 @@ const Footer = () => {
             <MdContacts />
             Contact
           </h3>
-          <ul className={`text-sm space-y-2 `}>
-            <li>Email: support@blogify.com</li>
-            <li>Phone: +880 1234-567890</li>
-            <li>Location: Dhaka, Bangladesh</li>
+          <ul className={`text-sm space-y-2`}>
+            <li className="flex items-center gap-2">
+              <MdEmail /> support@blogify.com
+            </li>
+            <li className="flex items-center gap-2">
+              <MdPhone /> +880 1234-567890
+            </li>
+            <li className="flex items-center gap-2">
+              <MdLocationOn /> Dhaka, Bangladesh
+            </li>
           </ul>
         </div>
 
@@ -126,7 +131,7 @@ const Footer = () => {
           <h3 className="text-lg font-semibold mb-4 flex items-center gap-2 dmSerif">
             <IoMdPersonAdd /> Follow Us
           </h3>
-          <div className={`flex space-x-4 text-xl `}>
+          <div className={`flex space-x-4 text-xl`}>
             <a
               href="https://www.facebook.com/"
               target="_blank"
@@ -155,7 +160,7 @@ const Footer = () => {
               href="https://github.com/"
               target="_blank"
               rel="noopener noreferrer"
-              className="hover:text-black hover:bg-white  hover:rounded-full p-1"
+              className="hover:text-black hover:bg-white hover:rounded-full p-1"
             >
               <FaGithub size={20} />
             </a>

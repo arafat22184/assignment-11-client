@@ -25,20 +25,20 @@ const OurGallery = () => {
 
   return (
     <section
-      className="relative bg-slate-950 py-20 px-4 text-white"
+      className="relative bg-slate-950 px-4 text-white"
       id="gallery"
       ref={ref}
     >
       <div className="max-w-7xl mx-auto">
         {/* Sticky Title */}
-        <div className="sticky top-20 z-30 bg-slate-950/90 backdrop-blur-lg py-4 dmSerif">
+        <div className="sticky lg:top-20 xl:top-[66px] z-30 bg-slate-950/90 backdrop-blur-lg py-4 pb-6 dmSerif">
           <motion.div
             initial={{ opacity: 0, y: -20 }}
             animate={inView ? { opacity: 1, y: 0 } : {}}
             transition={{ duration: 0.6 }}
             className="text-center"
           >
-            <h2 className="text-4xl md:text-5xl font-extrabold bg-gradient-to-r from-blue-400 via-cyan-300 to-purple-400 bg-clip-text text-transparent pb-4">
+            <h2 className="text-4xl md:text-5xl font-extrabold bg-blue-400 bg-clip-text text-transparent pb-4">
               <Typewriter
                 words={["Our", "Unforgettable", "Gallery"]}
                 loop={false}
@@ -58,7 +58,7 @@ const OurGallery = () => {
 
         {/* Masonry Image Grid */}
         <PhotoProvider>
-          <div className="mt-10 columns-1 sm:columns-2 md:columns-3 gap-4">
+          <div className=" columns-1 sm:columns-2 md:columns-3 gap-4">
             {images.map((src, idx) => (
               <motion.div
                 key={idx}
