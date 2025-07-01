@@ -5,7 +5,14 @@ import { toast } from "react-toastify";
 import { MdLogout } from "react-icons/md";
 import { RiMenu2Fill } from "react-icons/ri";
 import { IoMdArrowDropdown } from "react-icons/io";
-import { FaHome, FaBlog, FaPlus, FaStar, FaHeart } from "react-icons/fa";
+import {
+  FaHome,
+  FaBlog,
+  FaPlus,
+  FaStar,
+  FaHeart,
+  FaEnvelope,
+} from "react-icons/fa";
 
 const Navbar = () => {
   const { user, logOut } = use(AuthContext);
@@ -66,18 +73,20 @@ const Navbar = () => {
           <FaBlog /> All Blogs
         </NavLink>
       </li>
-      <li>
-        <NavLink
-          className={({ isActive }) =>
-            `flex items-center gap-2 text-white text-sm px-4 py-2 rounded hover:bg-blue-600 transition font-medium ${
-              isActive ? "bg-blue-700" : ""
-            }`
-          }
-          to="/addBlog"
-        >
-          <FaPlus /> Add Blog
-        </NavLink>
-      </li>
+      {user && (
+        <li>
+          <NavLink
+            className={({ isActive }) =>
+              `flex items-center gap-2 text-white text-sm px-4 py-2 rounded hover:bg-blue-600 transition font-medium ${
+                isActive ? "bg-blue-700" : ""
+              }`
+            }
+            to="/addBlog"
+          >
+            <FaPlus /> Add Blog
+          </NavLink>
+        </li>
+      )}
       <li>
         <NavLink
           className={({ isActive }) =>
@@ -90,6 +99,20 @@ const Navbar = () => {
           <FaStar /> Featured Blogs
         </NavLink>
       </li>
+      {user && (
+        <li>
+          <NavLink
+            className={({ isActive }) =>
+              `flex items-center gap-2 text-white text-sm px-4 py-2 rounded hover:bg-blue-600 transition font-medium ${
+                isActive ? "bg-blue-700" : ""
+              }`
+            }
+            to="/wishlist"
+          >
+            <FaHeart /> Wishlist
+          </NavLink>
+        </li>
+      )}
       <li>
         <NavLink
           className={({ isActive }) =>
@@ -97,9 +120,9 @@ const Navbar = () => {
               isActive ? "bg-blue-700" : ""
             }`
           }
-          to="/wishlist"
+          to="/contact"
         >
-          <FaHeart /> Wishlist
+          <FaEnvelope /> Contact Us
         </NavLink>
       </li>
     </>
@@ -112,7 +135,7 @@ const Navbar = () => {
           `text-sm font-semibold py-2 px-4 border rounded transition ${
             isActive
               ? "bg-blue-500 text-white"
-              : "border-blue-500 text-blue-500 hover:bg-blue-500 hover:text-white"
+              : "border-blue-500 text-white hover:bg-blue-500 hover:text-white"
           }`
         }
         to="/login"
@@ -124,7 +147,7 @@ const Navbar = () => {
           `text-sm font-semibold py-2 px-4 border rounded transition ${
             isActive
               ? "bg-blue-500 text-white"
-              : "border-blue-500 text-blue-500 hover:bg-blue-500 hover:text-white"
+              : "border-blue-500 text-white hover:bg-blue-500 hover:text-white"
           }`
         }
         to="/register"
@@ -180,7 +203,7 @@ const Navbar = () => {
           <div className="relative">
             <button
               onClick={() => setShowProfileMenu(!showProfileMenu)}
-              className="relative"
+              className="relative cursor-pointer"
             >
               <img
                 referrerPolicy="no-referrer"
@@ -200,7 +223,7 @@ const Navbar = () => {
                 </div>
                 <button
                   onClick={handleSignOut}
-                  className="w-full flex items-center gap-2 px-4 py-2 text-red-500 hover:bg-red-500 hover:text-white transition"
+                  className="w-full flex items-center gap-2 px-4 py-2 text-red-500 hover:bg-red-500 hover:text-white transition cursor-pointer"
                 >
                   <MdLogout /> Logout
                 </button>

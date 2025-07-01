@@ -12,6 +12,7 @@ import FeaturedBlogs from "../Pages/FeaturedBlogs";
 import Wishlist from "../Pages/Wishlist";
 import UpdateBlog from "../Pages/UpdateBlog";
 import ErrorPage from "../Pages/ErrorPage";
+import Contact from "../Pages/Contact";
 
 const router = createBrowserRouter([
   {
@@ -67,6 +68,10 @@ const router = createBrowserRouter([
             <UpdateBlog></UpdateBlog>
           </PrivateRoute>
         ),
+      },
+      {
+        path: "/contact",
+        Component: Contact,
       },
       {
         path: "featuredBlogs",

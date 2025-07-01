@@ -115,10 +115,10 @@ const Footer = () => {
           </h3>
           <ul className={`text-sm space-y-2`}>
             <li className="flex items-center gap-2">
-              <MdEmail /> support@blogify.com
+              <MdEmail /> 123alarafat@gmail.com
             </li>
             <li className="flex items-center gap-2">
-              <MdPhone /> +880 1234-567890
+              <MdPhone /> +88017471-44726
             </li>
             <li className="flex items-center gap-2">
               <MdLocationOn /> Dhaka, Bangladesh
