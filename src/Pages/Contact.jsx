@@ -95,7 +95,7 @@ const Contact = () => {
 
           <button
             type="submit"
-            className="flex items-center justify-center gap-2 bg-blue-500 text-white px-6 py-3 rounded-md hover:bg-blue-600 transition"
+            className="flex items-center justify-center gap-2 bg-blue-500 text-white px-6 py-3 rounded-md hover:bg-blue-600 transition cursor-pointer"
           >
             <FaRegPaperPlane />
             Send Message

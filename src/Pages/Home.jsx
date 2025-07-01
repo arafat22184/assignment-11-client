@@ -4,6 +4,7 @@ import Newsletter from "../Components/Newsletter";
 import OurGallery from "../Components/OurGallery";
 import TestimonialsSlider from "../Components/TestimonialsSlider";
 import RecentBlogs from "../Components/RecentBlogs";
+import BlogifyInNumber from "../Components/BlogifyInNumber";
 
 const Home = () => {
   useEffect(() => {
@@ -16,6 +17,7 @@ const Home = () => {
       <RecentBlogs></RecentBlogs>
       <OurGallery></OurGallery>
       <TestimonialsSlider></TestimonialsSlider>
+      <BlogifyInNumber></BlogifyInNumber>
       <Newsletter></Newsletter>
     </div>
   );

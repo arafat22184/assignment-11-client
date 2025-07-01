@@ -5,10 +5,10 @@ import { Navigation, Pagination, Autoplay } from "swiper/modules";
 import { motion, AnimatePresence } from "framer-motion";
 import { Typewriter } from "react-simple-typewriter";
 import { FaArrowRight } from "react-icons/fa";
-import { Link } from "react-scroll";
 import "swiper/css";
 import "swiper/css/navigation";
 import "swiper/css/pagination";
+import { Link } from "react-router";
 
 const slides = [
   {
@@ -120,12 +120,10 @@ const Banner = () => {
                         transition={{ delay: 1.4, duration: 0.6 }}
                       >
                         <Link
-                          to="join"
-                          smooth={true}
-                          duration={700}
+                          to="/allBlogs"
                           className="inline-flex items-center gap-2 bg-blue-600 hover:bg-blue-700 hover:shadow-blue-500/40 hover:shadow-md text-white px-6 py-3 rounded-full text-lg font-semibold transition duration-300"
                         >
-                          Join Now <FaArrowRight />
+                          Explore Blogs <FaArrowRight />
                         </Link>
                       </motion.div>
                     </motion.div>
