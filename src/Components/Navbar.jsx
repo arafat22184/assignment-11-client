@@ -4,6 +4,7 @@ import { AuthContext } from "../Provider/AuthProvider";
 import { toast } from "react-toastify";
 import { MdLogout } from "react-icons/md";
 import { RiMenu2Fill } from "react-icons/ri";
+import { AiFillDashboard } from "react-icons/ai";
 import {
   FaHome,
   FaBlog,
@@ -72,6 +73,21 @@ const Navbar = () => {
           <FaBlog /> All Blogs
         </NavLink>
       </li>
+      {user && (
+        <li>
+          <NavLink
+            className={({ isActive }) =>
+              `flex items-center gap-2 text-white text-xs xl:text-sm px-3 xl:px-4 py-2 rounded hover:bg-blue-600 transition font-medium ${
+                isActive ? "bg-blue-700" : ""
+              }`
+            }
+            to="/dashboard"
+          >
+            <AiFillDashboard />
+            Dashboard
+          </NavLink>
+        </li>
+      )}
       {user && (
         <li>
           <NavLink
