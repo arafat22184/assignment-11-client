@@ -13,6 +13,8 @@ import Wishlist from "../Pages/Wishlist";
 import UpdateBlog from "../Pages/UpdateBlog";
 import ErrorPage from "../Pages/ErrorPage";
 import Contact from "../Pages/Contact";
+import DashboardLayout from "../Layouts/DashboardLayout";
+import MyBlogs from "../Pages/MyBlogs";
 
 const router = createBrowserRouter([
   {
@@ -45,22 +47,7 @@ const router = createBrowserRouter([
           </PrivateRoute>
         ),
       },
-      {
-        path: "addBlog",
-        element: (
-          <PrivateRoute>
-            <AddBlog></AddBlog>
-          </PrivateRoute>
-        ),
-      },
-      {
-        path: "/wishlist",
-        element: (
-          <PrivateRoute>
-            <Wishlist></Wishlist>
-          </PrivateRoute>
-        ),
-      },
+
       {
         path: "/updateBlog/:id",
         element: (
@@ -84,6 +71,40 @@ const router = createBrowserRouter([
       {
         path: "/register",
         Component: Register,
+      },
+    ],
+  },
+  {
+    path: "/dashboard",
+    element: (
+      <PrivateRoute>
+        <DashboardLayout></DashboardLayout>
+      </PrivateRoute>
+    ),
+    children: [
+      {
+        path: "/dashboard/addBlog",
+        element: (
+          <PrivateRoute>
+            <AddBlog></AddBlog>
+          </PrivateRoute>
+        ),
+      },
+      {
+        path: "/dashboard/myBlogs",
+        element: (
+          <PrivateRoute>
+            <MyBlogs></MyBlogs>
+          </PrivateRoute>
+        ),
+      },
+      {
+        path: "/dashboard/wishlist",
+        element: (
+          <PrivateRoute>
+            <Wishlist></Wishlist>
+          </PrivateRoute>
+        ),
       },
     ],
   },

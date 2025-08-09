@@ -116,14 +116,17 @@ const AddBlog = () => {
       initial={{ opacity: 0 }}
       animate={{ opacity: 1 }}
       transition={{ duration: 2 }}
-      className="min-h-screen bg-slate-950 text-slate-100 px-4 py-12"
+      className="min-h-screen bg-slate-950 text-slate-100"
     >
-      <div className="max-w-4xl mx-auto border border-slate-800 rounded-xl p-8 shadow-lg bg-slate-900">
+      <div className="mx-auto border border-slate-800 rounded-xl p-8 shadow-lg bg-slate-900">
         <h2 className="flex items-center justify-center gap-2 text-3xl md:text-4xl font-bold text-white mb-4 dmSerif">
           <FiEdit3 /> Create New <span className="text-blue-400">Blog</span>
         </h2>
 
-        <form onSubmit={handleAddBlog} className="space-y-6">
+        <form
+          onSubmit={handleAddBlog}
+          className="space-y-6 grid grid-cols-2 gap-5"
+        >
           {/* Title */}
           <div>
             <label className="mb-1 flex items-center gap-1 text-white">
@@ -136,54 +139,6 @@ const AddBlog = () => {
               className="w-full bg-slate-800 text-white border border-slate-700 rounded-md px-4 py-2 focus:ring-2 focus:ring-blue-500 outline-none"
               placeholder="Your awesome blog title..."
             />
-          </div>
-
-          {/* PHOTO */}
-          <div className="space-y-6 border border-slate-700 p-4 rounded-2xl">
-            {/* Image URL */}
-            <div className="w-full">
-              <label className="flex items-center gap-1 text-white mb-1">
-                <FiImage /> Image URL
-                <span className="text-slate-400 ml-1">(optional)</span>
-              </label>
-              <input
-                name="imageUrl"
-                type="url"
-                className="w-full bg-slate-800 text-white border border-slate-700 rounded-md px-4 py-2 focus:ring-2 focus:ring-blue-500 outline-none"
-                placeholder="https://example.com/image.jpg"
-              />
-            </div>
-
-            {/* Centered "or" Divider */}
-            <div className="relative flex items-center justify-center">
-              <span className="absolute bg-slate-900 px-3 text-blue-500">
-                or
-              </span>
-              <div className="w-full border-t border-slate-500" />
-            </div>
-
-            {/* Image File Upload */}
-            <div className="w-full">
-              <label className="flex items-center gap-1 text-white mb-1">
-                <FiUploadCloud /> Upload Image File
-                <span className="text-slate-400 ml-1">(optional)</span>
-              </label>
-              <input
-                name="imageFile"
-                type="file"
-                onChange={handleFileChange}
-                accept="image/png, image/jpeg, image/jpg"
-                className="file:bg-blue-600 file:text-white file:border-none file:mx-4 file:px-4 file:py-2 file:rounded-md bg-slate-800 text-white border border-slate-700 rounded-md py-2 focus:ring-2 focus:ring-blue-500 outline-none w-full"
-              />
-            </div>
-            {/* Optional Image Preview */}
-            {previewImage && (
-              <img
-                src={previewImage}
-                alt="Preview"
-                className="max-h-64 rounded-md border border-slate-700"
-              />
-            )}
           </div>
 
           {/* Category */}
@@ -247,32 +202,52 @@ const AddBlog = () => {
             />
           </div>
 
-          {/* Author Info */}
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-            <div>
-              <label className="mb-1 flex items-center gap-1 text-white">
-                <MdPerson /> Your Name
+          {/* PHOTO */}
+          <div className="space-y-6 border border-slate-700 p-4 rounded-2xl">
+            {/* Image URL */}
+            <div className="w-full">
+              <label className="flex items-center gap-1 text-white mb-1">
+                <FiImage /> Image URL
+                <span className="text-slate-400 ml-1">(optional)</span>
               </label>
               <input
-                name="name"
-                type="text"
-                readOnly
-                defaultValue={user.displayName}
-                className="w-full bg-slate-800 text-white border border-slate-700 rounded-md px-4 py-2"
+                name="imageUrl"
+                type="url"
+                className="w-full bg-slate-800 text-white border border-slate-700 rounded-md px-4 py-2 focus:ring-2 focus:ring-blue-500 outline-none"
+                placeholder="https://example.com/image.jpg"
               />
             </div>
-            <div>
-              <label className="mb-1 flex items-center gap-1 text-white">
-                <MdEmail /> Your Email
+
+            {/* Centered "or" Divider */}
+            <div className="relative flex items-center justify-center">
+              <span className="absolute bg-slate-900 px-3 text-blue-500">
+                or
+              </span>
+              <div className="w-full border-t border-slate-500" />
+            </div>
+
+            {/* Image File Upload */}
+            <div className="w-full">
+              <label className="flex items-center gap-1 text-white mb-1">
+                <FiUploadCloud /> Upload Image File
+                <span className="text-slate-400 ml-1">(optional)</span>
               </label>
               <input
-                name="email"
-                type="email"
-                readOnly
-                defaultValue={user.email}
-                className="w-full bg-slate-800 text-white border border-slate-700 rounded-md px-4 py-2"
+                name="imageFile"
+                type="file"
+                onChange={handleFileChange}
+                accept="image/png, image/jpeg, image/jpg"
+                className="file:bg-blue-600 file:text-white file:border-none file:mx-4 file:px-4 file:py-2 file:rounded-md bg-slate-800 text-white border border-slate-700 rounded-md py-2 focus:ring-2 focus:ring-blue-500 outline-none w-full"
               />
             </div>
+            {/* Optional Image Preview */}
+            {previewImage && (
+              <img
+                src={previewImage}
+                alt="Preview"
+                className="max-h-64 rounded-md border border-slate-700"
+              />
+            )}
           </div>
 
           {/* Submit */}
@@ -280,7 +255,7 @@ const AddBlog = () => {
             type="submit"
             whileTap={{ scale: 0.95 }}
             disabled={loading}
-            className="flex w-full items-center justify-center gap-2 py-3 bg-blue-500 hover:bg-blue-600 text-white font-semibold rounded-md transition-colors disabled:opacity-50 cursor-pointer"
+            className="flex px-8 mx-auto col-span-2 items-center justify-center gap-2 py-3 bg-blue-500 hover:bg-blue-600 text-white font-semibold rounded-md transition-colors disabled:opacity-50 cursor-pointer"
           >
             <FiUploadCloud />
             {loading ? "Posting..." : "Post Blog"}

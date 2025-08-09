@@ -1,6 +1,6 @@
 /* eslint-disable no-unused-vars */
 import { use, useEffect, useState } from "react";
-import { useNavigate, useParams } from "react-router";
+import { Link, useNavigate, useParams } from "react-router";
 import { motion } from "framer-motion";
 import { FiFileText, FiTag, FiImage, FiUploadCloud } from "react-icons/fi";
 import { ImCancelCircle } from "react-icons/im";
@@ -169,7 +169,7 @@ const UpdateBlog = () => {
         window.history.back();
       }
 
-      // ✅ Always reset loading
+      // Always reset loading
       setLoading(false);
     });
   };
@@ -199,12 +199,12 @@ const UpdateBlog = () => {
       className="min-h-screen bg-slate-950 text-slate-100 px-4 py-12"
     >
       <div className="max-w-4xl mx-auto">
-        <button
+        <Link
+          to={`/blog/${blog._id}`}
           className="flex items-center gap-2 text-blue-300 hover:text-blue-400 mb-6 transition-colors cursor-pointer"
-          onClick={() => window.history.back()}
         >
           <BiLeftArrow /> Back to Blog Details
-        </button>
+        </Link>
       </div>
       <div className="max-w-4xl mx-auto border border-slate-800 rounded-xl p-8 shadow-lg bg-slate-900">
         <h2 className="flex items-center justify-center gap-2 text-3xl md:text-4xl font-bold text-white mb-4 dmSerif">

@@ -66,12 +66,6 @@ const DetailsBlog = () => {
     setLikeCount(blog?.likes?.length || 0);
   }, [user, blog]);
 
-  const formattedDate = new Date(blog.createdAt).toLocaleDateString("en-US", {
-    year: "numeric",
-    month: "long",
-    day: "numeric",
-  });
-
   const handleWishlist = () => {
     if (!user?.email) {
       navigate("/login", { state: location.pathname });
@@ -110,6 +104,7 @@ const DetailsBlog = () => {
       userImage: user.photoURL,
       userName: user.displayName,
       blogId: blog._id,
+      userId: user.uid,
     };
 
     axiosSecure
@@ -132,6 +127,12 @@ const DetailsBlog = () => {
 
   const { category, author, createdAt, title, content, image, tags, _id } =
     blog;
+
+  const formattedDate = new Date(createdAt).toLocaleDateString("en-US", {
+    year: "numeric",
+    month: "long",
+    day: "numeric",
+  });
 
   return (
     <motion.div
