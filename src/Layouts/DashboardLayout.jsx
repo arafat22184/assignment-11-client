@@ -167,12 +167,15 @@ const DashboardLayout = () => {
                 alt="fitforge logo"
               />
             </Link>
-            <h3 className="text-white font-extrabold text-2xl dmSerif">
+            <Link
+              to={"/"}
+              className="text-white font-extrabold text-4xl dmSerif"
+            >
               Blogify
-            </h3>
+            </Link>
           </div>
           <div className="p-2 xl:p-6 flex flex-row items-center border-b border-slate-800 gap-2">
-            <Link to="/dashboard/profile" className="group">
+            <Link to="/dashboard" className="group">
               <UserAvatar size="xl" />
             </Link>
 
