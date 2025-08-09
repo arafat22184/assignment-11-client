@@ -80,13 +80,13 @@ const Wishlist = () => {
     );
 
   return (
-    <div className="bg-slate-950 px-4 py-10 text-white max-w-7xl mx-auto min-h-screen">
+    <div className="bg-slate-900 border border-slate-800 rounded-xl p-8 text-white mx-auto">
       {/* Section Header */}
-      <div className="mb-12 text-center">
+      <div className="mb-6 text-center">
         <h2 className="text-4xl md:text-5xl font-bold text-white mb-4 dmSerif">
           My <span className="text-blue-400">Wishlists</span>
         </h2>
-        <p className="text-slate-400 text-sm md:text-base max-w-2xl mx-auto">
+        <p className="text-slate-400 text-sm md:text-base">
           View and manage your favorite blogs in one place. Easily revisit or
           remove blogs you've wishlisted.
         </p>
@@ -97,7 +97,7 @@ const Wishlist = () => {
           Your wishlist is empty. Start saving your favorite blogs!
         </div>
       ) : (
-        <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
+        <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-4">
           {wishlist.map((blog) => (
             <motion.div
               key={blog._id}

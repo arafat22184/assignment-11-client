@@ -198,9 +198,9 @@ const MyBlogs = () => {
     return <div className="p-6 text-red-500">Error: {error.message}</div>;
 
   return (
-    <div className="min-h-screen bg-slate-950 text-white w-full mx-auto">
+    <div className="bg-slate-900 border border-slate-800 rounded-xl p-8 text-white mx-auto">
       {/* Section Header */}
-      <div className="mb-12 text-center">
+      <div className="mb-6 text-center">
         <h2 className="text-4xl md:text-5xl font-bold text-white mb-4 dmSerif">
           My <span className="text-blue-400">Blogs</span>
         </h2>
