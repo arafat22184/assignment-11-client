@@ -8,7 +8,7 @@ const RecentBlogs = () => {
   const blogs = useLoaderData();
 
   return (
-    <section className="relative py-10 px-4 md:px-6 xl:px-0 bg-slate-950 overflow-hidden">
+    <section className="relative py-10 px-4 md:px-6 xl:px-0 overflow-hidden">
       {/* Title */}
       <motion.div
         initial={{ opacity: 0, y: 20 }}

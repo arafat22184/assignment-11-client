@@ -43,7 +43,7 @@ const testimonials = [
 
 const AdvancedTestimonialsSlider = () => {
   return (
-    <section className="max-w-7xl pb-20 mx-auto bg-slate-950 py-10 px-6 text-white relative">
+    <section className="max-w-7xl pb-20 mx-auto py-10 px-6 text-white relative">
       <div className="rotate-90 absolute -right-48 top-64 hidden lg:block">
         <BlogifyLogo></BlogifyLogo>
       </div>

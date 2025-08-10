@@ -19,7 +19,7 @@ const Newsletter = () => {
 
   return (
     <section
-      className="max-w-7xl mx-4 xl:mx-auto relative z-10 px-6 py-20 bg-slate-900 bg-gradient-to-br from-slate-900 via-slate-950 to-black rounded-lg overflow-hidden shadow-2xl border border-r-purple-600 border-l-blue-500 border-t-blue-500 border-b-purple-600"
+      className="max-w-7xl mx-4 xl:mx-auto relative z-10 px-6 py-20 bg-gradient-to-br from-slate-900 via-slate-950 to-black rounded-lg overflow-hidden shadow-2xl border border-r-purple-600 border-l-blue-500 border-t-blue-500 border-b-purple-600"
       id="newsletter"
     >
       {/* background glow */}

@@ -1,4 +1,4 @@
-import React from "react";
+import { useContext } from "react";
 import {
   FaFacebookF,
   FaGithub,
@@ -10,12 +10,17 @@ import {
   FaPlus,
   FaStar,
   FaHeart,
+  FaEnvelope,
+  FaBlog,
 } from "react-icons/fa";
 import { IoMdPersonAdd } from "react-icons/io";
 import { MdContacts, MdEmail, MdPhone, MdLocationOn } from "react-icons/md";
 import { Link } from "react-router";
+import { AuthContext } from "../Provider/AuthProvider";
+import { AiFillDashboard } from "react-icons/ai";
 
 const Footer = () => {
+  const { user } = useContext(AuthContext);
   return (
     <footer className="relative bg-slate-800 text-white mt-52">
       {/* Better Wave Divider */}
@@ -74,18 +79,21 @@ const Footer = () => {
                 className="flex items-center gap-2 hover:text-white"
                 to={"/allBlogs"}
               >
-                <FaBookOpen className="text-blue-500" /> <span>All Blogs</span>
+                <FaBlog className="text-blue-500" /> <span>All Blogs</span>
               </Link>
             </li>
 
-            <li className="transform hover:translate-x-2 transition-transform duration-300">
-              <Link
-                className="flex items-center gap-2 hover:text-white"
-                to={"/addBlog"}
-              >
-                <FaPlus className="text-blue-500" /> <span>Add Blog</span>
-              </Link>
-            </li>
+            {user && (
+              <li className="transform hover:translate-x-2 transition-transform duration-300">
+                <Link
+                  className="flex items-center gap-2 hover:text-white"
+                  to={"/dashboard"}
+                >
+                  <AiFillDashboard className="text-blue-500" />
+                  <span>Dashboard</span>
+                </Link>
+              </li>
+            )}
 
             <li className="transform hover:translate-x-2 transition-transform duration-300">
               <Link
@@ -99,9 +107,10 @@ const Footer = () => {
             <li className="transform hover:translate-x-2 transition-transform duration-300">
               <Link
                 className="flex items-center gap-2 hover:text-white"
-                to={"/wishlist"}
+                to={"/contact"}
               >
-                <FaHeart className="text-blue-500" /> <span>Wishlist</span>
+                <FaEnvelope className="text-blue-500" />
+                <span>Contact Us</span>
               </Link>
             </li>
           </ul>
