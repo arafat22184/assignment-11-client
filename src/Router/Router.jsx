@@ -15,6 +15,7 @@ import ErrorPage from "../Pages/ErrorPage";
 import Contact from "../Pages/Contact";
 import DashboardLayout from "../Layouts/DashboardLayout";
 import MyBlogs from "../Pages/MyBlogs";
+import DashboardHome from "../Pages/DashboardHome";
 
 const router = createBrowserRouter([
   {
@@ -82,6 +83,14 @@ const router = createBrowserRouter([
       </PrivateRoute>
     ),
     children: [
+      {
+        index: true,
+        element: (
+          <PrivateRoute>
+            <DashboardHome></DashboardHome>
+          </PrivateRoute>
+        ),
+      },
       {
         path: "/dashboard/addBlog",
         element: (
