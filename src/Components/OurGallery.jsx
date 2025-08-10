@@ -27,7 +27,7 @@ const OurGallery = () => {
     <section className="relative px-4 text-white" id="gallery" ref={ref}>
       <div className="max-w-7xl mx-auto">
         {/* Sticky Title */}
-        <div className="sticky lg:top-20 xl:top-[64px] z-30 dark:bg-slate-950/90 backdrop-blur-lg py-4 pb-6 dmSerif">
+        <div className="sticky lg:top-20 xl:top-[64px] z-30 bg-slate-950/90 backdrop-blur-lg py-4 pb-6 dmSerif">
           <motion.div
             initial={{ opacity: 0, y: -20 }}
             animate={inView ? { opacity: 1, y: 0 } : {}}

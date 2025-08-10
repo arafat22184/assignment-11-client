@@ -3,6 +3,17 @@
 @import "tailwindcss";
 @plugin "daisyui";
 
+@layer base {
+  html {
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+  }
+
+  html::-webkit-scrollbar {
+    display: none;
+  }
+}
+
 .interFont {
   font-family: "Inter", sans-serif;
   font-optical-sizing: auto;

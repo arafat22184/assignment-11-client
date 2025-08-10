@@ -6,7 +6,7 @@ import BackToTopButton from "../Components/BackToTopButton";
 
 const MainLayout = () => {
   return (
-    <div className="bg-white dark:bg-slate-950 min-h-screen">
+    <div className="bg-slate-950 min-h-screen">
       {/* Sticky Navbar */}
       <div className="sticky top-0 z-50 bg-slate-950 border-b border-blue-500">
         <Navbar />

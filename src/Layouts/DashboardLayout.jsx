@@ -162,14 +162,14 @@ const DashboardLayout = () => {
           <div className="flex lg:flex-col xl:flex-row justify-center items-center xl:gap-4 rounded-xl min-w-11/12 mt-4">
             <Link to={"/"}>
               <img
-                className="w-12 xl:w-18"
+                className="w-12 xl:w-14"
                 src="https://i.ibb.co/cSqJhKWm/logo-Light.png"
                 alt="fitforge logo"
               />
             </Link>
             <Link
               to={"/"}
-              className="text-white font-extrabold text-4xl dmSerif"
+              className="text-white font-extrabold text-xl xl:text-4xl dmSerif"
             >
               Blogify
             </Link>
