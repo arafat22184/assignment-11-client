@@ -5,6 +5,7 @@ import { motion } from "framer-motion";
 import { useInView } from "react-intersection-observer";
 import { Typewriter } from "react-simple-typewriter";
 import { MdOutlineKeyboardDoubleArrowRight } from "react-icons/md";
+import { useNavigate } from "react-router";
 
 const images = [
   "https://i.ibb.co/FkcWHYKG/Astronaut.jpg",
@@ -22,6 +23,7 @@ const images = [
 
 const OurGallery = () => {
   const { ref, inView } = useInView({ triggerOnce: true, threshold: 0.1 });
+  const navigate = useNavigate();
 
   return (
     <section className="relative px-4 text-white" id="gallery" ref={ref}>
@@ -77,7 +79,10 @@ const OurGallery = () => {
       </div>
 
       <div className="flex justify-center my-5">
-        <button className="bg-blue-600 hover:bg-blue-700 py-3 px-8 font-bold rounded-2xl flex items-center justify-center gap-1 cursor-pointer">
+        <button
+          onClick={() => navigate("/featuredBlogs")}
+          className="bg-blue-600 hover:bg-blue-700 py-3 px-8 font-bold rounded-2xl flex items-center justify-center gap-1 cursor-pointer"
+        >
           See More
           <MdOutlineKeyboardDoubleArrowRight size={25} />
         </button>
